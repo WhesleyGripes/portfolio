@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Briggs & Cole | Attorneys at Law</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--gold:#d4a853;--gold-light:#e4c373;--gold-dark:#b8912e;--charcoal:#1c1c1e;--bg:#141414;--bg2:#1e1e20;--bg3:#252527;--text:#e8e8e8;--text-muted:#9ca3af;--border:rgba(212,168,83,.15)}
+body{font-family:Georgia,'Times New Roman',serif;background:var(--bg);color:var(--text);line-height:1.8}
+a{text-decoration:none;color:inherit}
+h1,h2,h3,h4,h5{font-family:Georgia,'Times New Roman',serif}
+
+/* NAV - newspaper masthead style */
+.masthead{border-bottom:3px double var(--gold);padding:20px 40px;text-align:center}
+.masthead-inner{max-width:1100px;margin:0 auto}
+.masthead .logo{font-size:2.4rem;font-weight:400;letter-spacing:6px;text-transform:uppercase;margin-bottom:4px}
+.masthead .logo span{color:var(--gold)}
+.masthead .est{font-size:.7rem;color:var(--text-muted);letter-spacing:3px;text-transform:uppercase}
+.masthead-nav{display:flex;justify-content:center;gap:32px;margin-top:16px;padding-top:14px;border-top:1px solid var(--border);list-style:none}
+.masthead-nav a{font-family:'Segoe UI',system-ui,sans-serif;color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
+.masthead-nav a:hover{color:var(--gold)}
+.masthead-nav .cta-link{color:var(--gold);font-weight:700}
+
+/* EDITORIAL HEADLINE SECTION (replaces hero) */
+.headline-section{max-width:1100px;margin:0 auto;padding:60px 40px 40px;border-bottom:1px solid var(--border)}
+.headline-section .kicker{font-family:'Segoe UI',system-ui,sans-serif;font-size:.7rem;color:var(--gold);text-transform:uppercase;letter-spacing:4px;margin-bottom:12px}
+.headline-section h1{font-size:clamp(2.2rem,4.5vw,3.4rem);font-weight:400;line-height:1.25;margin-bottom:20px;letter-spacing:-1px}
+.headline-section h1 strong{font-weight:700;color:var(--gold)}
+.headline-section .lede{font-size:1.15rem;color:var(--text-muted);max-width:600px;margin-bottom:28px;line-height:1.8}
+.headline-btns{display:flex;gap:16px;flex-wrap:wrap}
+.btn-gold{background:var(--gold);color:var(--bg);padding:14px 36px;border-radius:0;font-family:'Segoe UI',system-ui,sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:2px;transition:background .3s;display:inline-block}
+.btn-gold:hover{background:var(--gold-light)}
+.btn-outline{background:transparent;color:var(--gold);padding:14px 36px;border-radius:0;font-family:'Segoe UI',system-ui,sans-serif;font-weight:700;font-size:.82rem;text-transform:uppercase;letter-spacing:2px;border:1px solid var(--gold);transition:all .3s;display:inline-block}
+.btn-outline:hover{background:var(--gold);color:var(--bg)}
+
+/* STATS BAR */
+.stats-bar{background:var(--bg2);border-bottom:1px solid var(--border)}
+.stats-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);text-align:center;padding:40px}
+.stat-item .number{font-family:'Segoe UI',system-ui,sans-serif;font-size:2.4rem;font-weight:800;color:var(--gold);line-height:1}
+.stat-item .label{color:var(--text-muted);font-size:.8rem;margin-top:6px;text-transform:uppercase;letter-spacing:1px;font-family:'Segoe UI',system-ui,sans-serif}
+
+/* EDITORIAL MULTI-COLUMN LAYOUT */
+.editorial{max-width:1100px;margin:0 auto;padding:60px 40px}
+
+/* Practice areas: 2-column TEXT layout */
+.practice-header{margin-bottom:40px}
+.practice-header h2{font-size:2rem;font-weight:400;margin-bottom:8px}
+.practice-header h2 span{color:var(--gold);font-weight:700}
+.practice-header p{color:var(--text-muted);font-size:.9rem}
+
+.practice-columns{column-count:2;column-gap:48px;column-rule:1px solid var(--border)}
+.practice-entry{break-inside:avoid;margin-bottom:36px}
+.practice-entry h3{font-size:1.2rem;color:var(--gold);margin-bottom:8px;font-weight:400;border-bottom:1px solid var(--border);padding-bottom:6px}
+.practice-entry p{color:var(--text-muted);font-size:.92rem;line-height:1.8}
+
+/* ATTORNEYS - editorial profile style */
+.attorneys-section{border-top:1px solid var(--border);padding-top:60px;margin-top:20px}
+.attorneys-section h2{font-size:2rem;font-weight:400;margin-bottom:40px}
+.attorneys-section h2 span{color:var(--gold);font-weight:700}
+
+.attorney-profiles{display:flex;flex-direction:column;gap:40px}
+.attorney-profile{display:grid;grid-template-columns:200px 1fr;gap:32px;padding-bottom:40px;border-bottom:1px solid var(--border)}
+.attorney-profile:last-child{border-bottom:none}
+.attorney-portrait{height:260px;background:linear-gradient(135deg,var(--charcoal),#2a2a2c);overflow:hidden}
+.attorney-portrait img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:filter .5s}
+.attorney-profile:hover .attorney-portrait img{filter:grayscale(0%)}
+.attorney-bio h3{font-size:1.4rem;font-weight:400;margin-bottom:2px}
+.attorney-bio .title{color:var(--gold);font-family:'Segoe UI',system-ui,sans-serif;font-size:.82rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;margin-bottom:12px}
+.attorney-bio p{color:var(--text-muted);font-size:.92rem;line-height:1.8;margin-bottom:10px}
+.attorney-bio .credentials{font-style:italic;color:var(--gold-light);font-size:.88rem}
+
+/* CONSULTATION */
+.consult-section{border-top:1px solid var(--border);padding-top:60px;margin-top:20px}
+.consult-section h2{font-size:2rem;font-weight:400;margin-bottom:8px}
+.consult-section h2 span{color:var(--gold);font-weight:700}
+.consult-section > p{color:var(--text-muted);margin-bottom:36px;font-size:.92rem}
+
+.consult-box{max-width:600px;background:var(--bg2);padding:44px;border:1px solid var(--border)}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;margin-bottom:5px;font-family:'Segoe UI',system-ui,sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 16px;background:var(--bg);border:1px solid rgba(255,255,255,.1);color:var(--text);font-size:.92rem;font-family:Georgia,serif;outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.consult-box .btn-gold{width:100%;text-align:center;border:none;cursor:pointer;font-size:.9rem;padding:16px}
+
+/* FOOTER - newspaper style */
+.paper-footer{border-top:3px double var(--gold);max-width:1100px;margin:60px auto 0;padding:40px}
+.footer-cols{display:grid;grid-template-columns:repeat(4,1fr);gap:32px;margin-bottom:32px}
+.footer-cols h4{color:var(--gold);margin-bottom:14px;font-family:'Segoe UI',system-ui,sans-serif;font-size:.75rem;text-transform:uppercase;letter-spacing:2px}
+.footer-cols p,.footer-cols a{color:var(--text-muted);font-size:.88rem;display:block;margin-bottom:6px;transition:color .3s}
+.footer-cols a:hover{color:var(--gold)}
+.footer-bottom{text-align:center;padding-top:24px;border-top:1px solid var(--border);color:var(--text-muted);font-size:.78rem;font-family:'Segoe UI',system-ui,sans-serif}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:800px){
+  .practice-columns{column-count:1}
+  .attorney-profile{grid-template-columns:1fr}
+  .attorney-portrait{height:200px}
+  .stats-inner{grid-template-columns:repeat(2,1fr);gap:24px}
+  .footer-cols{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .masthead-nav{flex-wrap:wrap;gap:16px}
+}
+</style>
+</head>
+<body>
+
+<!-- MASTHEAD NAV -->
+<header class="masthead">
+  <div class="masthead-inner">
+    <div class="logo">Briggs <span>&</span> Cole</div>
+    <div class="est">Attorneys at Law &bull; Established 1994</div>
+    <ul class="masthead-nav">
+      <li><a href="#practice">Practice Areas</a></li>
+      <li><a href="#attorneys">Attorneys</a></li>
+      <li><a href="#results">Results</a></li>
+      <li><a href="#consult" class="cta-link">Free Consultation</a></li>
+    </ul>
+  </div>
+</header>
+
+<!-- EDITORIAL HEADLINE -->
+<div class="headline-section fade-in">
+  <div class="kicker">Attorneys at Law</div>
+  <h1>Relentless Advocacy for <strong>Your Rights</strong></h1>
+  <p class="lede">For over 30 years, Briggs & Cole has delivered decisive legal representation. We fight for the outcomes our clients deserve.</p>
+  <div class="headline-btns">
+    <a href="#consult" class="btn-gold">Schedule Consultation</a>
+    <a href="#practice" class="btn-outline">Our Practice</a>
+  </div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar fade-in" id="results">
+  <div class="stats-inner">
+    <div class="stat-item"><div class="number">$250M+</div><div class="label">Recovered</div></div>
+    <div class="stat-item"><div class="number">2,400+</div><div class="label">Cases Won</div></div>
+    <div class="stat-item"><div class="number">98%</div><div class="label">Success Rate</div></div>
+    <div class="stat-item"><div class="number">30+</div><div class="label">Years Experience</div></div>
+  </div>
+</div>
+
+<!-- EDITORIAL CONTENT -->
+<div class="editorial">
+  <!-- Practice Areas: 2-column text layout -->
+  <div class="practice-header fade-in" id="practice">
+    <h2>Practice <span>Areas</span></h2>
+    <p>Focused expertise across critical areas of law</p>
+  </div>
+  <div class="practice-columns fade-in">
+    <div class="practice-entry">
+      <h3>Personal Injury</h3>
+      <p>Auto accidents, slip and fall, medical malpractice, and wrongful death claims. We have recovered over $120 million for injured clients and their families. Our team works on contingency -- you pay nothing unless we win your case.</p>
+    </div>
+    <div class="practice-entry">
+      <h3>Corporate Law</h3>
+      <p>Mergers, acquisitions, compliance, and corporate governance for businesses of all sizes. From startups to Fortune 500 companies, we provide strategic counsel that protects your interests and drives growth.</p>
+    </div>
+    <div class="practice-entry">
+      <h3>Criminal Defense</h3>
+      <p>Vigorous defense for felony and misdemeanor charges. Protecting your freedom is our highest calling. We have successfully defended thousands of cases in state and federal courts across the country.</p>
+    </div>
+    <div class="practice-entry">
+      <h3>Family Law</h3>
+      <p>Divorce, custody, child support, and prenuptial agreements handled with sensitivity. We understand that family matters require both legal expertise and genuine human compassion.</p>
+    </div>
+    <div class="practice-entry">
+      <h3>Estate Planning</h3>
+      <p>Wills, trusts, probate, and asset protection to secure your family's future. Our estate planning attorneys craft comprehensive plans that preserve wealth across generations.</p>
+    </div>
+    <div class="practice-entry">
+      <h3>Employment Law</h3>
+      <p>Wrongful termination, discrimination, harassment, and wage disputes. We represent both employees seeking justice and employers navigating complex regulatory landscapes.</p>
+    </div>
+  </div>
+
+  <!-- Attorneys: editorial profile style -->
+  <div class="attorneys-section fade-in" id="attorneys">
+    <h2>Our <span>Attorneys</span></h2>
+    <div class="attorney-profiles">
+      <div class="attorney-profile">
+        <div class="attorney-portrait"><img src="https://images.unsplash.com/photo-1556157382-97edd2d93229?w=300&q=80" alt="Richard Briggs, Founding Partner" loading="lazy"></div>
+        <div class="attorney-bio">
+          <h3>Richard Briggs</h3>
+          <div class="title">Founding Partner</div>
+          <p>Richard Briggs has spent three decades at the forefront of personal injury litigation, earning a national reputation for his tenacious courtroom advocacy. He has secured landmark verdicts that have shaped case law in multiple jurisdictions.</p>
+          <p class="credentials">Yale Law School, JD 1992 &bull; AV Preeminent Rated &bull; Super Lawyers 2010--2026</p>
+        </div>
+      </div>
+      <div class="attorney-profile">
+        <div class="attorney-portrait"><img src="https://images.unsplash.com/photo-1580894732444-8ecded7900cd?w=300&q=80" alt="Elizabeth Cole, Managing Partner" loading="lazy"></div>
+        <div class="attorney-bio">
+          <h3>Elizabeth Cole</h3>
+          <div class="title">Managing Partner</div>
+          <p>Elizabeth Cole brings nearly three decades of experience in corporate and employment law. Known for her meticulous preparation and strategic thinking, she has guided hundreds of businesses through complex legal challenges.</p>
+          <p class="credentials">Stanford Law School, JD 1996 &bull; Best Lawyers in America 2015--2026</p>
+        </div>
+      </div>
+      <div class="attorney-profile">
+        <div class="attorney-portrait"><img src="https://images.unsplash.com/photo-1519085360753-af0119f7cbe7?w=300&q=80" alt="David Martinez, Senior Associate" loading="lazy"></div>
+        <div class="attorney-bio">
+          <h3>David Martinez</h3>
+          <div class="title">Senior Associate</div>
+          <p>David Martinez is a formidable criminal defense attorney whose cross-examination skills have earned him a reputation among prosecutors and judges alike. He has tried over 200 criminal cases to verdict.</p>
+          <p class="credentials">Georgetown Law, JD 2009 &bull; Former Assistant U.S. Attorney</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Consultation -->
+  <div class="consult-section fade-in" id="consult">
+    <h2>Free <span>Consultation</span></h2>
+    <p>Tell us about your case. We respond within 24 hours.</p>
+    <div class="consult-box">
+      <div class="form-row">
+        <div class="form-group"><label>Full Name</label><input type="text" placeholder="John Smith"></div>
+        <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 123-4567"></div>
+      </div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="john@email.com"></div>
+      <div class="form-group"><label>Practice Area</label>
+        <select><option>Select area...</option><option>Personal Injury</option><option>Corporate Law</option><option>Criminal Defense</option><option>Family Law</option><option>Estate Planning</option><option>Employment Law</option></select>
+      </div>
+      <div class="form-group"><label>Case Details</label><textarea placeholder="Briefly describe your legal matter..."></textarea></div>
+      <button class="btn-gold">Request Consultation</button>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer class="paper-footer">
+  <div class="footer-cols">
+    <div><h4>Briggs & Cole</h4><p>Prestigious legal representation since 1994. AV Preeminent rated.</p></div>
+    <div><h4>Practice Areas</h4><a href="#">Personal Injury</a><a href="#">Corporate</a><a href="#">Criminal Defense</a><a href="#">Family Law</a></div>
+    <div><h4>Office Hours</h4><p>Mon-Fri: 8am - 6pm</p><p>Sat: By appointment</p><p>Emergency line 24/7</p></div>
+    <div><h4>Contact</h4><p>One Liberty Plaza, 35th Floor</p><p>(555) 678-9012</p><p>info@briggsandcole.com</p></div>
+  </div>
+  <div class="footer-bottom">&copy; 2026 Briggs & Cole LLP. All rights reserved. Attorney advertising.</div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</body>
+</html>

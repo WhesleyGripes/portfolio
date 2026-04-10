@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iron Athletics</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--orange:#f97316;--orange-dark:#ea580c;--orange-light:#fb923c;--black:#0a0a0a;--bg:#111111;--bg2:#1a1a1a;--bg3:#222;--text:#f5f5f5;--text-muted:#a3a3a3;--border:rgba(249,115,22,.2)}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+/* NAV - minimal */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 40px;display:flex;justify-content:space-between;align-items:center;mix-blend-mode:difference}
+.logo{font-size:1.4rem;font-weight:900;text-transform:uppercase;letter-spacing:3px;color:#fff}
+.logo span{color:var(--orange)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:rgba(255,255,255,.6);font-size:.8rem;font-weight:600;text-transform:uppercase;letter-spacing:1px;transition:color .3s}
+.nav-links a:hover{color:#fff}
+.nav-cta{background:var(--orange);color:#fff;padding:12px 28px;border-radius:6px;font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:background .3s;mix-blend-mode:normal}
+.nav-cta:hover{background:var(--orange-dark)}
+
+/* FULL VIEWPORT HEIGHT SECTIONS */
+.vp-section{min-height:100vh;display:flex;align-items:center;justify-content:center;padding:80px 40px;position:relative;overflow:hidden}
+
+/* Section 1: Hero - dark with image */
+.sec-hero{background:url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=1200&q=80') center/cover no-repeat;text-align:center}
+.sec-hero::before{content:'';position:absolute;inset:0;background:rgba(10,10,10,0.7)}
+.sec-hero>*{position:relative;z-index:1}
+.sec-hero h1{font-size:clamp(4rem,10vw,8rem);font-weight:900;text-transform:uppercase;line-height:.9;margin-bottom:24px;letter-spacing:-3px}
+.sec-hero h1 span{color:var(--orange);display:block}
+.sec-hero p{font-size:1.2rem;color:var(--text-muted);margin-bottom:40px;max-width:500px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--orange);color:#fff;padding:18px 48px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:.9rem;transition:all .3s;display:inline-block}
+.btn-primary:hover{background:var(--orange-dark);transform:translateY(-2px)}
+.btn-outline{background:transparent;color:var(--orange);padding:18px 48px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:.9rem;border:2px solid var(--orange);transition:all .3s;display:inline-block}
+.btn-outline:hover{background:var(--orange);color:#fff}
+
+/* Section 2: Schedule - light */
+.sec-schedule{background:var(--text);color:var(--bg);flex-direction:column}
+.sec-schedule h2{font-size:3.5rem;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:48px;text-align:center}
+.sec-schedule h2 span{color:var(--orange)}
+
+/* WEEKLY GRID SCHEDULE */
+.schedule-grid{max-width:1100px;width:100%;display:grid;grid-template-columns:80px repeat(5,1fr);gap:2px;background:rgba(0,0,0,.3);border-radius:12px;overflow:hidden}
+.schedule-header{background:var(--orange);color:#fff;padding:14px 8px;text-align:center;font-size:.75rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.schedule-time{background:rgba(0,0,0,.4);padding:14px 8px;text-align:center;font-size:.75rem;font-weight:700;color:var(--orange);text-transform:uppercase;letter-spacing:1px;display:flex;align-items:center;justify-content:center}
+.schedule-cell{background:rgba(0,0,0,.2);padding:8px;min-height:70px;display:flex;align-items:center;justify-content:center}
+.class-block{width:100%;padding:10px 8px;border-radius:6px;text-align:center;font-size:.72rem;font-weight:600;line-height:1.3;cursor:default;transition:transform .2s}
+.class-block:hover{transform:scale(1.05)}
+.class-block .class-name{font-weight:800;font-size:.78rem;margin-bottom:2px}
+.class-block .class-trainer{opacity:.7;font-weight:400}
+.cb-hiit{background:rgba(249,115,22,.3);color:var(--orange-light);border:1px solid rgba(249,115,22,.4)}
+.cb-yoga{background:rgba(34,197,94,.2);color:#86efac;border:1px solid rgba(34,197,94,.3)}
+.cb-boxing{background:rgba(239,68,68,.2);color:#fca5a5;border:1px solid rgba(239,68,68,.3)}
+.cb-crossfit{background:rgba(59,130,246,.2);color:#93c5fd;border:1px solid rgba(59,130,246,.3)}
+.cb-strength{background:rgba(168,85,247,.2);color:#d8b4fe;border:1px solid rgba(168,85,247,.3)}
+.cb-recover{background:rgba(20,184,166,.2);color:#99f6e4;border:1px solid rgba(20,184,166,.3)}
+
+/* Section 3: Pricing - dark */
+.sec-pricing{background:var(--bg);flex-direction:column}
+.sec-pricing h2{font-size:3.5rem;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:48px;text-align:center}
+.sec-pricing h2 span{color:var(--orange)}
+.pricing-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1000px;width:100%}
+.price-card{background:var(--bg2);border:1px solid rgba(255,255,255,.06);border-radius:16px;padding:40px 32px;text-align:center;position:relative;transition:transform .3s,border-color .3s}
+.price-card:hover{transform:translateY(-6px);border-color:var(--orange)}
+.price-card.featured{border-color:var(--orange);background:linear-gradient(180deg,rgba(249,115,22,.08),var(--bg2))}
+.price-card.featured::before{content:'POPULAR';position:absolute;top:-12px;left:50%;transform:translateX(-50%);background:var(--orange);color:#fff;padding:4px 20px;border-radius:20px;font-size:.7rem;font-weight:700;letter-spacing:1px}
+.price-card h3{font-size:1rem;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;color:var(--text-muted)}
+.price-amount{font-size:3.5rem;font-weight:900;margin-bottom:4px}
+.price-amount span{font-size:1rem;color:var(--text-muted);font-weight:400}
+.price-period{color:var(--text-muted);font-size:.85rem;margin-bottom:28px}
+.price-features{list-style:none;margin-bottom:32px;text-align:left}
+.price-features li{padding:10px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.9rem;color:var(--text-muted)}
+.price-features li::before{content:'\2713';color:var(--orange);margin-right:10px;font-weight:700}
+
+/* Section 4: Trainers - light bg */
+.sec-trainers{background:#1a1a1a;flex-direction:column}
+.sec-trainers h2{font-size:3.5rem;font-weight:900;text-transform:uppercase;letter-spacing:1px;margin-bottom:48px;text-align:center}
+.sec-trainers h2 span{color:var(--orange)}
+.trainer-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:24px;max-width:1100px;width:100%}
+.trainer-card{background:var(--bg);border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.06);transition:transform .3s}
+.trainer-card:hover{transform:translateY(-4px)}
+.trainer-img{height:200px;background:linear-gradient(135deg,var(--orange),#7c2d12);overflow:hidden}
+.trainer-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.trainer-card:hover .trainer-img img{transform:scale(1.05)}
+.trainer-info{padding:20px;text-align:center}
+.trainer-info h3{font-size:1rem;margin-bottom:4px}
+.trainer-info .role{color:var(--orange);font-size:.8rem;font-weight:600;margin-bottom:6px}
+.trainer-info p{color:var(--text-muted);font-size:.8rem}
+
+/* Section 5: CTA - orange */
+.sec-cta{background:linear-gradient(135deg,var(--orange),#c2410c);text-align:center;flex-direction:column}
+.sec-cta h2{font-size:clamp(2.5rem,6vw,4rem);font-weight:900;text-transform:uppercase;margin-bottom:20px;color:#fff}
+.sec-cta p{font-size:1.1rem;color:rgba(255,255,255,.8);margin-bottom:36px;max-width:500px}
+.btn-white{background:#fff;color:var(--orange-dark);padding:18px 56px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:2px;display:inline-block;transition:transform .3s}
+.btn-white:hover{transform:translateY(-2px)}
+
+/* Footer */
+footer{background:var(--black);padding:60px 40px 30px;border-top:1px solid rgba(255,255,255,.05)}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-bottom:40px}
+.footer-col h4{color:var(--orange);margin-bottom:16px;font-size:.85rem;text-transform:uppercase;letter-spacing:2px}
+.footer-col p,.footer-col a{color:var(--text-muted);font-size:.9rem;display:block;margin-bottom:8px;transition:color .3s}
+.footer-col a:hover{color:var(--orange)}
+.footer-bottom{text-align:center;padding-top:30px;border-top:1px solid rgba(255,255,255,.05);color:var(--text-muted);font-size:.8rem}
+
+/* Fade */
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .pricing-grid{grid-template-columns:1fr}
+  .trainer-grid{grid-template-columns:1fr 1fr}
+  .schedule-grid{font-size:.7rem;grid-template-columns:50px repeat(5,1fr)}
+  .schedule-header,.schedule-time{padding:8px 4px;font-size:.65rem}
+  .class-block{padding:6px 4px;font-size:.62rem}
+  .class-block .class-name{font-size:.68rem}
+  nav{padding:16px 20px}
+  .nav-links{display:none}
+}
+@media(max-width:600px){
+  .trainer-grid{grid-template-columns:1fr}
+  .sec-hero h1{font-size:3.5rem}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">Iron <span>Athletics</span></div>
+  <ul class="nav-links">
+    <li><a href="#schedule">Schedule</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#trainers">Trainers</a></li>
+  </ul>
+  <a href="#cta" class="nav-cta">Free Trial</a>
+</nav>
+
+<!-- SECTION 1: HERO - full viewport, dark -->
+<div class="vp-section sec-hero">
+  <div>
+    <h1>Push Your <span>Limits</span></h1>
+    <p>World-class facilities, expert trainers, and a community that pushes you to be your best.</p>
+    <div class="hero-btns">
+      <a href="#cta" class="btn-primary">Start Free Trial</a>
+      <a href="#schedule" class="btn-outline">View Classes</a>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 2: SCHEDULE - full viewport, light, visual timeline -->
+<div class="vp-section sec-schedule fade-in" id="schedule">
+  <h2>Class <span>Schedule</span></h2>
+  <div class="schedule-grid">
+    <!-- Header row -->
+    <div class="schedule-header"></div>
+    <div class="schedule-header">Mon</div>
+    <div class="schedule-header">Tue</div>
+    <div class="schedule-header">Wed</div>
+    <div class="schedule-header">Thu</div>
+    <div class="schedule-header">Fri</div>
+    <!-- 6:00 AM -->
+    <div class="schedule-time">6 AM</div>
+    <div class="schedule-cell"><div class="class-block cb-hiit"><div class="class-name">HIIT Burn</div><div class="class-trainer">Mike R.</div></div></div>
+    <div class="schedule-cell"></div>
+    <div class="schedule-cell"><div class="class-block cb-hiit"><div class="class-name">HIIT Burn</div><div class="class-trainer">Mike R.</div></div></div>
+    <div class="schedule-cell"></div>
+    <div class="schedule-cell"><div class="class-block cb-hiit"><div class="class-name">HIIT Burn</div><div class="class-trainer">Mike R.</div></div></div>
+    <!-- 8:00 AM -->
+    <div class="schedule-time">8 AM</div>
+    <div class="schedule-cell"><div class="class-block cb-yoga"><div class="class-name">Yoga Flow</div><div class="class-trainer">Priya S.</div></div></div>
+    <div class="schedule-cell"></div>
+    <div class="schedule-cell"><div class="class-block cb-yoga"><div class="class-name">Yoga Flow</div><div class="class-trainer">Priya S.</div></div></div>
+    <div class="schedule-cell"></div>
+    <div class="schedule-cell"><div class="class-block cb-yoga"><div class="class-name">Yoga Flow</div><div class="class-trainer">Priya S.</div></div></div>
+    <!-- 12:00 PM -->
+    <div class="schedule-time">12 PM</div>
+    <div class="schedule-cell"><div class="class-block cb-boxing"><div class="class-name">Boxing</div><div class="class-trainer">Ava W.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-crossfit"><div class="class-name">CrossFit</div><div class="class-trainer">Jake T.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-boxing"><div class="class-name">Boxing</div><div class="class-trainer">Ava W.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-crossfit"><div class="class-name">CrossFit</div><div class="class-trainer">Jake T.</div></div></div>
+    <div class="schedule-cell"></div>
+    <!-- 5:30 PM -->
+    <div class="schedule-time">5:30 PM</div>
+    <div class="schedule-cell"><div class="class-block cb-strength"><div class="class-name">Strength</div><div class="class-trainer">Mike R.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-crossfit"><div class="class-name">CrossFit</div><div class="class-trainer">Jake T.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-strength"><div class="class-name">Strength</div><div class="class-trainer">Mike R.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-crossfit"><div class="class-name">CrossFit</div><div class="class-trainer">Jake T.</div></div></div>
+    <div class="schedule-cell"><div class="class-block cb-strength"><div class="class-name">Strength</div><div class="class-trainer">Mike R.</div></div></div>
+    <!-- 7:00 PM -->
+    <div class="schedule-time">7 PM</div>
+    <div class="schedule-cell"><div class="class-block cb-recover"><div class="class-name">Stretch & Recover</div><div class="class-trainer">Priya S.</div></div></div>
+    <div class="schedule-cell"></div>
+    <div class="schedule-cell"><div class="class-block cb-recover"><div class="class-name">Stretch & Recover</div><div class="class-trainer">Priya S.</div></div></div>
+    <div class="schedule-cell"></div>
+    <div class="schedule-cell"><div class="class-block cb-yoga"><div class="class-name">Power Yoga</div><div class="class-trainer">Priya S.</div></div></div>
+  </div>
+</div>
+
+<!-- SECTION 3: PRICING - full viewport, dark -->
+<div class="vp-section sec-pricing fade-in" id="pricing">
+  <h2>Membership <span>Plans</span></h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Basic</h3>
+      <div class="price-amount">$29<span>/mo</span></div>
+      <p class="price-period">Open gym access only</p>
+      <ul class="price-features">
+        <li>Unlimited open gym</li>
+        <li>Locker room access</li>
+        <li>Free WiFi</li>
+        <li>1 guest pass / month</li>
+      </ul>
+      <a href="#" class="btn-outline" style="font-size:.8rem;padding:12px 32px">Get Started</a>
+    </div>
+    <div class="price-card featured">
+      <h3>Pro</h3>
+      <div class="price-amount">$59<span>/mo</span></div>
+      <p class="price-period">Gym + all classes</p>
+      <ul class="price-features">
+        <li>Everything in Basic</li>
+        <li>Unlimited classes</li>
+        <li>InBody scan monthly</li>
+        <li>Nutrition guide</li>
+        <li>4 guest passes / month</li>
+      </ul>
+      <a href="#" class="btn-primary" style="font-size:.8rem;padding:12px 32px">Get Started</a>
+    </div>
+    <div class="price-card">
+      <h3>Elite</h3>
+      <div class="price-amount">$99<span>/mo</span></div>
+      <p class="price-period">Full experience</p>
+      <ul class="price-features">
+        <li>Everything in Pro</li>
+        <li>2 PT sessions / month</li>
+        <li>Recovery suite access</li>
+        <li>Custom meal plan</li>
+        <li>Priority booking</li>
+      </ul>
+      <a href="#" class="btn-outline" style="font-size:.8rem;padding:12px 32px">Get Started</a>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 4: TRAINERS - full viewport, slightly lighter dark -->
+<div class="vp-section sec-trainers fade-in" id="trainers">
+  <h2>Our <span>Trainers</span></h2>
+  <div class="trainer-grid">
+    <div class="trainer-card">
+      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1567013127542-490d757e51fc?w=300&q=80" alt="Mike Ramos" loading="lazy"></div>
+      <div class="trainer-info"><h3>Mike Ramos</h3><p class="role">Head Coach / HIIT</p><p>NASM CPT, 12 years experience. Former D1 athlete.</p></div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300&q=80" alt="Ava Whitfield" loading="lazy"></div>
+      <div class="trainer-info"><h3>Ava Whitfield</h3><p class="role">Spin & Cardio</p><p>Certified indoor cycling instructor. Energy personified.</p></div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=300&q=80" alt="Jake Torres" loading="lazy"></div>
+      <div class="trainer-info"><h3>Jake Torres</h3><p class="role">Strength & CrossFit</p><p>CrossFit L3. Competed nationally in Olympic lifting.</p></div>
+    </div>
+    <div class="trainer-card">
+      <div class="trainer-img"><img src="https://images.unsplash.com/photo-1548690312-e3b507d8c110?w=300&q=80" alt="Priya Shah" loading="lazy"></div>
+      <div class="trainer-info"><h3>Priya Shah</h3><p class="role">Yoga & Recovery</p><p>RYT-500, specializing in mobility and injury prevention.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION 5: CTA - full viewport, orange gradient -->
+<div class="vp-section sec-cta" id="cta">
+  <h2>Your First Week Is Free</h2>
+  <p>No commitment, no credit card. Just show up and see what Iron Athletics is all about.</p>
+  <a href="#" class="btn-white">Claim Free Trial</a>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Iron Athletics</h4><p>Built for people who want results. No gimmicks, no shortcuts.</p></div>
+      <div class="footer-col"><h4>Hours</h4><p>Mon-Fri: 5am - 10pm</p><p>Sat-Sun: 7am - 8pm</p><p>Holidays: 8am - 2pm</p></div>
+      <div class="footer-col"><h4>Quick Links</h4><a href="#">Classes</a><a href="#">Pricing</a><a href="#">Trainers</a><a href="#">Blog</a></div>
+      <div class="footer-col"><h4>Location</h4><p>450 Iron Way</p><p>(555) 345-6789</p><p>info@ironathletics.com</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Iron Athletics. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10th Planet Greenville — Gallery</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;600;700;800&display=swap');
+  *{margin:0;padding:0;box-sizing:border-box}
+  body{font-family:'Inter',system-ui,sans-serif;background:#f5f5f0;color:#1a1a1a;overflow-x:hidden}
+  a{text-decoration:none;color:inherit}
+
+  /* Nav — same as main site */
+  nav{position:fixed;top:0;width:100%;z-index:100;padding:16px 40px;display:flex;justify-content:space-between;align-items:center;background:rgba(245,245,240,0.95);backdrop-filter:blur(12px);border-bottom:1px solid #ddd9d0;box-shadow:0 2px 12px rgba(0,0,0,0.06)}
+  .logo img{height:50px}
+  .nav-links{display:flex;gap:24px;list-style:none;align-items:center}
+  .nav-links a{font-size:13px;color:#777;letter-spacing:1px;text-transform:uppercase;transition:color .3s}
+  .nav-links a:hover{color:#2d6a4f}
+  .nav-links a.active{color:#2d6a4f;font-weight:700}
+  .nav-cta{background:#2d6a4f;color:#fff;padding:10px 24px;font-weight:800;font-size:13px;letter-spacing:1px;text-transform:uppercase;border-radius:6px;transition:background .3s}
+  .nav-cta:hover{background:#40916c}
+
+  /* Hero */
+  .hero{padding:140px 40px 60px;text-align:center}
+  .hero h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,10vw,80px);letter-spacing:4px;color:#1a1a1a;margin-bottom:8px}
+  .hero h1 em{color:#2d6a4f;font-style:normal}
+  .hero p{color:#777;font-size:16px;max-width:500px;margin:0 auto}
+
+  /* Filter tabs */
+  .filters{display:flex;justify-content:center;gap:8px;padding:20px 40px 40px;flex-wrap:wrap}
+  .filter-btn{background:none;border:2px solid #ddd9d0;color:#777;padding:8px 20px;font-family:inherit;font-size:13px;font-weight:600;letter-spacing:1px;text-transform:uppercase;cursor:pointer;border-radius:30px;transition:all .3s}
+  .filter-btn:hover,.filter-btn.active{background:#2d6a4f;border-color:#2d6a4f;color:#fff}
+
+  /* Masonry gallery */
+  .gallery{max-width:1400px;margin:0 auto;padding:0 20px 80px;columns:3;column-gap:12px}
+  .gallery-item{break-inside:avoid;margin-bottom:12px;position:relative;overflow:hidden;border-radius:6px;cursor:pointer}
+  .gallery-item img{width:100%;display:block;transition:transform .6s ease,filter .4s}
+  .gallery-item:hover img{transform:scale(1.05);filter:brightness(1.1)}
+
+  /* Overlay on hover */
+  .gallery-item .overlay{position:absolute;inset:0;background:linear-gradient(transparent 50%,rgba(0,0,0,0.7));opacity:0;transition:opacity .4s;display:flex;flex-direction:column;justify-content:flex-end;padding:20px}
+  .gallery-item:hover .overlay{opacity:1}
+  .overlay-text{color:#fff;font-size:14px;font-weight:600}
+  .overlay-sub{color:rgba(255,255,255,0.7);font-size:12px;margin-top:2px}
+
+  /* Featured large image */
+  .featured{padding:40px 20px 60px;max-width:1400px;margin:0 auto}
+  .featured img{width:100%;max-height:500px;object-fit:cover;border-radius:8px}
+  .featured-caption{text-align:center;margin-top:16px;font-size:13px;color:#777;letter-spacing:1px;text-transform:uppercase}
+
+  /* Quote break */
+  .quote-break{padding:80px 40px;text-align:center;background:#fff;margin:40px 0}
+  .quote-break blockquote{font-family:'Bebas Neue',sans-serif;font-size:clamp(28px,5vw,48px);letter-spacing:2px;color:#2d6a4f;max-width:800px;margin:0 auto;line-height:1.2}
+  .quote-break cite{display:block;margin-top:16px;font-family:'Inter',sans-serif;font-size:13px;color:#777;font-style:normal;letter-spacing:1px;text-transform:uppercase}
+
+  /* CTA */
+  .gallery-cta{padding:80px 40px;text-align:center;background:#2d6a4f}
+  .gallery-cta h2{font-family:'Bebas Neue',sans-serif;font-size:48px;letter-spacing:3px;color:#fff;margin-bottom:12px}
+  .gallery-cta p{color:rgba(255,255,255,0.8);margin-bottom:28px;font-size:16px}
+  .gallery-cta a{background:#fff;color:#2d6a4f;padding:14px 36px;font-weight:800;font-size:14px;letter-spacing:2px;text-transform:uppercase;border-radius:6px;transition:all .3s;display:inline-block}
+  .gallery-cta a:hover{background:rgba(255,255,255,0.9);transform:translateY(-2px)}
+
+  /* Footer */
+  footer{background:#1a2e23;padding:30px 40px;text-align:center;color:rgba(255,255,255,0.4);font-size:12px}
+  footer a{color:rgba(255,255,255,0.6);transition:color .3s}
+  footer a:hover{color:#fff}
+
+  /* Lightbox */
+  .lightbox{position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:200;display:none;align-items:center;justify-content:center;cursor:pointer}
+  .lightbox.active{display:flex}
+  .lightbox img{max-width:90vw;max-height:85vh;object-fit:contain;border-radius:4px}
+  .lightbox-close{position:absolute;top:20px;right:30px;color:#fff;font-size:32px;cursor:pointer;opacity:0.6;transition:opacity .3s}
+  .lightbox-close:hover{opacity:1}
+
+  /* Fade in */
+  .fade-in{opacity:0;transform:translateY(20px);transition:opacity .6s ease,transform .6s ease}
+  .fade-in.visible{opacity:1;transform:translateY(0)}
+
+  @media(max-width:768px){
+    .gallery{columns:2}
+    nav .nav-links{display:none}
+  }
+  @media(max-width:480px){
+    .gallery{columns:1}
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">
+    <a href="jiujitsu.html"><img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/10a65ab3-e1bc-4abd-bfcf-8c5525dcc007/10P-GVL-LOGO.png" alt="10th Planet Greenville"></a>
+  </div>
+  <ul class="nav-links">
+    <li><a href="jiujitsu.html#about">About</a></li>
+    <li><a href="jiujitsu.html#instructors">Instructors</a></li>
+    <li><a href="jiujitsu.html#schedule">Schedule</a></li>
+    <li><a class="active" href="#">Gallery</a></li>
+    <li><a href="jiujitsu.html#trial" class="nav-cta">Free Trial</a></li>
+  </ul>
+</nav>
+
+<div class="hero fade-in">
+  <h1>ON THE <em>MATS</em></h1>
+  <p>Training, competing, and building the team — one roll at a time.</p>
+</div>
+
+<!-- Featured image -->
+<div class="featured fade-in">
+  <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/bb6b8394-462a-453d-ac0f-2a268c213e12/SES-1.jpg" alt="Southeast Scramble">
+  <div class="featured-caption">Southeast Scramble — Our Home Tournament</div>
+</div>
+
+<!-- Gallery -->
+<div class="gallery fade-in">
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/ab8b1827-7656-49ae-b90f-b8ef7dd3551f/Luke-3.jpg" alt="Training">
+    <div class="overlay"><span class="overlay-text">Live Rolling</span><span class="overlay-sub">Training Session</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/88c82516-0554-432b-89c6-098eb411fad5/Manny-1.jpg" alt="Coach Manny">
+    <div class="overlay"><span class="overlay-text">Coach Manny Vazquez</span><span class="overlay-sub">Head Coach &bull; Black Belt</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/f4c3ce05-4321-41f8-88ce-22f647f3ffe9/Jared-1.jpg" alt="Training">
+    <div class="overlay"><span class="overlay-text">Technical Drilling</span><span class="overlay-sub">Fundamentals Class</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/440093b3-fbc9-4e1d-9f1f-1a9f2120ed4a/Joey-Brandon-1.jpg" alt="Coaches">
+    <div class="overlay"><span class="overlay-text">Coaching</span><span class="overlay-sub">Competition Prep</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/bb6b8394-462a-453d-ac0f-2a268c213e12/SES-1.jpg" alt="Southeast Scramble">
+    <div class="overlay"><span class="overlay-text">Southeast Scramble</span><span class="overlay-sub">Home Tournament</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/ab8b1827-7656-49ae-b90f-b8ef7dd3551f/Luke-3.jpg" alt="Rolling">
+    <div class="overlay"><span class="overlay-text">No-Gi Rolling</span><span class="overlay-sub">Evening Class</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/88c82516-0554-432b-89c6-098eb411fad5/Manny-1.jpg" alt="Manny">
+    <div class="overlay"><span class="overlay-text">Manny in Action</span><span class="overlay-sub">UFC / Bellator Veteran</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/440093b3-fbc9-4e1d-9f1f-1a9f2120ed4a/Joey-Brandon-1.jpg" alt="Team">
+    <div class="overlay"><span class="overlay-text">Team Training</span><span class="overlay-sub">Building Champions</span></div>
+  </div>
+</div>
+
+<!-- Quote -->
+<div class="quote-break fade-in">
+  <blockquote>"Manny and his squad are running a top tier operation. The technique is on point and the vibes are immaculate."</blockquote>
+  <cite>— Conor H.</cite>
+</div>
+
+<!-- More photos -->
+<div class="gallery fade-in">
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/f4c3ce05-4321-41f8-88ce-22f647f3ffe9/Jared-1.jpg" alt="Training">
+    <div class="overlay"><span class="overlay-text">Advanced Techniques</span><span class="overlay-sub">10th Planet System</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/bb6b8394-462a-453d-ac0f-2a268c213e12/SES-1.jpg" alt="Competition">
+    <div class="overlay"><span class="overlay-text">Competition Day</span><span class="overlay-sub">Southeast Scramble</span></div>
+  </div>
+  <div class="gallery-item" onclick="openLightbox(this)">
+    <img src="https://images.squarespace-cdn.com/content/v1/60eb5435257aa07b968c9734/ab8b1827-7656-49ae-b90f-b8ef7dd3551f/Luke-3.jpg" alt="Grappling">
+    <div class="overlay"><span class="overlay-text">Grappling Exchange</span><span class="overlay-sub">Open Mat</span></div>
+  </div>
+</div>
+
+<!-- CTA -->
+<div class="gallery-cta fade-in">
+  <h2>READY TO TRAIN?</h2>
+  <p>Your first class is free. No experience needed.</p>
+  <a href="jiujitsu.html#trial">SIGN UP NOW</a>
+</div>
+
+<footer>
+  <p>&copy; 2026 10th Planet Greenville &bull; <a href="jiujitsu.html">Back to Home</a> &bull; (864) 236-8000</p>
+</footer>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lightbox-close">&times;</span>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+  // Fade in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+
+  // Lightbox
+  function openLightbox(el) {
+    const img = el.querySelector('img');
+    document.getElementById('lightbox-img').src = img.src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+  }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeLightbox(); });
+</script>
+
+</body>
+</html>

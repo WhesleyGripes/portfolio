@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bold Creative Agency</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--yellow:#facc15;--yellow-light:#fde047;--yellow-dark:#eab308;--black:#0a0a0a;--bg:#0a0a0a;--bg2:#141414;--bg3:#1e1e1e;--text:#f5f5f5;--text-muted:#a3a3a3;--border:rgba(250,204,21,.15)}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(10,10,10,.9);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+nav .inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:70px;padding:0 48px}
+.logo{font-size:1.6rem;font-weight:900;text-transform:uppercase;letter-spacing:4px;color:var(--yellow)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text-muted);font-size:.85rem;text-transform:uppercase;letter-spacing:1px;font-weight:600;transition:color .3s}
+.nav-links a:hover{color:var(--yellow)}
+.nav-cta{background:var(--yellow);color:var(--black);padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:700;text-transform:uppercase;letter-spacing:1px;transition:background .3s}
+.nav-cta:hover{background:var(--yellow-light)}
+
+/* FULL-WIDTH VIDEO-STYLE HERO */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden;background:#0a0a0a}
+.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1400&q=80') center/cover no-repeat}
+.hero-bg::after{content:'';position:absolute;inset:0;background:rgba(10,10,10,.82)}
+.hero-content{position:relative;z-index:1;max-width:900px;padding:0 32px}
+.hero h1{font-size:clamp(3rem,8vw,6rem);font-weight:900;text-transform:uppercase;line-height:.95;margin-bottom:24px;letter-spacing:-2px}
+.hero h1 span{color:var(--yellow)}
+.hero p{font-size:1.2rem;color:var(--text-muted);margin-bottom:40px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-yellow{background:var(--yellow);color:var(--black);padding:18px 48px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:.9rem;transition:all .3s;display:inline-block}
+.btn-yellow:hover{background:var(--yellow-light);transform:translateY(-2px);box-shadow:0 8px 30px rgba(250,204,21,.3)}
+.btn-ghost{background:transparent;color:#fff;padding:18px 48px;border-radius:6px;font-weight:700;text-transform:uppercase;letter-spacing:2px;font-size:.9rem;border:2px solid rgba(255,255,255,.3);transition:all .3s;display:inline-block}
+.btn-ghost:hover{border-color:var(--yellow);color:var(--yellow)}
+/* Scroll indicator */
+.scroll-hint{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:3px;display:flex;flex-direction:column;align-items:center;gap:8px;animation:bobDown 2s ease infinite}
+.scroll-hint::after{content:'';width:1px;height:40px;background:linear-gradient(to bottom,var(--text-muted),transparent)}
+@keyframes bobDown{0%,100%{transform:translateX(-50%) translateY(0)}50%{transform:translateX(-50%) translateY(8px)}}
+
+/* CASE STUDIES - alternating full-width blocks */
+.case-block{display:grid;grid-template-columns:1fr 1fr;min-height:80vh;overflow:hidden}
+.case-block.reverse{direction:rtl}
+.case-block.reverse>*{direction:ltr}
+.case-img{position:relative;overflow:hidden;min-height:500px}
+.case-img img{width:100%;height:100%;object-fit:cover;transition:transform .6s}
+.case-block:hover .case-img img{transform:scale(1.04)}
+.case-text{display:flex;flex-direction:column;justify-content:center;padding:80px 64px;background:var(--bg2)}
+.case-block.reverse .case-text{background:var(--bg)}
+.case-text .tag{color:var(--yellow);font-size:.75rem;text-transform:uppercase;letter-spacing:3px;font-weight:700;margin-bottom:16px}
+.case-text h3{font-size:2rem;font-weight:800;margin-bottom:16px;line-height:1.2}
+.case-text p{color:var(--text-muted);font-size:1rem;margin-bottom:28px;line-height:1.8}
+.case-stats{display:flex;gap:32px}
+.case-stat strong{display:block;font-size:1.6rem;color:var(--yellow);font-weight:800}
+.case-stat span{font-size:.8rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+
+/* SERVICES */
+.services-section{padding:100px 48px;background:var(--bg3)}
+.services-inner{max-width:1200px;margin:0 auto}
+.section-title{text-align:center;margin-bottom:60px}
+.section-title h2{font-size:2.5rem;font-weight:900;text-transform:uppercase;margin-bottom:12px}
+.section-title h2 span{color:var(--yellow)}
+.section-title p{color:var(--text-muted);max-width:500px;margin:0 auto}
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.service-card{background:var(--bg);padding:36px 28px;border-radius:14px;border:1px solid rgba(255,255,255,.05);transition:border-color .3s,transform .3s}
+.service-card:hover{border-color:var(--yellow);transform:translateY(-4px)}
+.service-num{font-size:2rem;font-weight:900;color:var(--yellow);margin-bottom:16px;opacity:.5}
+.service-card h3{font-size:1.1rem;margin-bottom:12px;text-transform:uppercase;letter-spacing:1px}
+.service-card p{color:var(--text-muted);font-size:.9rem}
+
+/* TEAM - playful grid with hover reveals */
+.team-section{padding:100px 48px;background:var(--bg)}
+.team-inner{max-width:1200px;margin:0 auto}
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
+.team-card{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:3/4;cursor:pointer;background:var(--bg2);border:1px solid rgba(255,255,255,.05)}
+.team-card-bg{width:100%;height:100%;background:linear-gradient(135deg,var(--yellow),var(--yellow-dark));display:flex;align-items:center;justify-content:center}
+.team-card-bg .initials{font-size:4rem;font-weight:900;color:var(--black);opacity:.3}
+.team-overlay{position:absolute;inset:0;background:rgba(10,10,10,.92);display:flex;flex-direction:column;justify-content:flex-end;padding:32px;opacity:0;transition:opacity .4s}
+.team-card:hover .team-overlay{opacity:1}
+.team-overlay h3{font-size:1.3rem;font-weight:800;margin-bottom:4px}
+.team-overlay .role{color:var(--yellow);font-size:.85rem;font-weight:600;margin-bottom:12px}
+.team-overlay p{color:var(--text-muted);font-size:.85rem;line-height:1.6}
+.team-overlay .social{display:flex;gap:12px;margin-top:16px}
+.team-overlay .social a{color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:1px;transition:color .3s}
+.team-overlay .social a:hover{color:var(--yellow)}
+
+/* BOLD CONTACT */
+.contact-section{padding:0;background:var(--yellow);color:var(--black)}
+.contact-inner{max-width:1400px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;min-height:80vh}
+.contact-left{padding:100px 64px;display:flex;flex-direction:column;justify-content:center}
+.contact-left h2{font-size:clamp(2.5rem,5vw,4rem);font-weight:900;text-transform:uppercase;line-height:1.05;margin-bottom:20px}
+.contact-left p{font-size:1.05rem;color:rgba(10,10,10,.6);margin-bottom:32px;max-width:400px}
+.contact-details{list-style:none}
+.contact-details li{padding:10px 0;border-bottom:1px solid rgba(10,10,10,.1);font-size:.95rem}
+.contact-details li strong{display:inline-block;width:80px}
+.contact-right{background:var(--bg);padding:100px 64px;display:flex;flex-direction:column;justify-content:center}
+.contact-right h3{font-size:1.4rem;font-weight:800;margin-bottom:24px;color:var(--text)}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;margin-bottom:6px;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);font-weight:600}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:14px 18px;background:var(--bg2);border:1px solid rgba(255,255,255,.08);border-radius:8px;color:var(--text);font-size:.95rem;outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--yellow)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:var(--bg2)}
+.form-submit{background:var(--yellow);color:var(--black);border:none;padding:16px;width:100%;border-radius:8px;font-weight:700;font-size:.95rem;text-transform:uppercase;letter-spacing:1px;cursor:pointer;transition:background .3s}
+.form-submit:hover{background:var(--yellow-light)}
+
+/* FOOTER */
+footer{background:var(--black);padding:48px 48px 24px;border-top:1px solid var(--border)}
+.footer-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-inner .logo{font-size:1.2rem}
+.footer-links{display:flex;gap:24px;list-style:none}
+.footer-links a{color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:1px;transition:color .3s}
+.footer-links a:hover{color:var(--yellow)}
+.footer-copy{width:100%;text-align:center;margin-top:40px;padding-top:30px;border-top:1px solid rgba(255,255,255,.05);color:var(--text-muted);font-size:.8rem}
+
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .case-block,.case-block.reverse{grid-template-columns:1fr}
+  .case-img{min-height:300px}
+  .case-text{padding:48px 32px}
+  .contact-inner{grid-template-columns:1fr}
+  .contact-left,.contact-right{padding:60px 32px}
+  .services-grid{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr 1fr}
+  nav .inner{padding:0 24px}
+  .nav-links,.nav-cta{display:none}
+}
+@media(max-width:600px){
+  .team-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="logo">Bold</div>
+    <ul class="nav-links">
+      <li><a href="#work">Work</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#team">Team</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Start a Project</a>
+  </div>
+</nav>
+
+<!-- FULL-WIDTH HERO with video-style background -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <h1>We Make Brands <span>Impossible to Ignore</span></h1>
+    <p>Bold is a creative agency that turns ambitious ideas into brands, campaigns, and digital experiences that move people.</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn-yellow">Start a Project</a>
+      <a href="#work" class="btn-ghost">See Our Work</a>
+    </div>
+  </div>
+  <div class="scroll-hint">Scroll</div>
+</section>
+
+<!-- CASE STUDIES: full-width alternating blocks -->
+<div id="work">
+  <!-- Case 1: Image Left, Text Right -->
+  <div class="case-block fade-in">
+    <div class="case-img">
+      <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="Vortex Energy project" loading="lazy">
+    </div>
+    <div class="case-text">
+      <div class="tag">Brand Identity</div>
+      <h3>Vortex Energy Rebrand</h3>
+      <p>Complete brand overhaul for a renewable energy startup. From strategy through launch, we crafted a visual identity that positioned Vortex as the future of clean energy.</p>
+      <div class="case-stats">
+        <div class="case-stat"><strong>340%</strong><span>Brand Awareness</span></div>
+        <div class="case-stat"><strong>2.1M</strong><span>Impressions</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 2: Image Right, Text Left -->
+  <div class="case-block reverse fade-in">
+    <div class="case-img">
+      <img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=800&q=80" alt="Noma Restaurant project" loading="lazy">
+    </div>
+    <div class="case-text">
+      <div class="tag">Digital Campaign</div>
+      <h3>Noma Restaurant Launch</h3>
+      <p>Omnichannel launch campaign for a fine-dining concept entering the US market. Social-first strategy combined with influencer partnerships and experiential activations.</p>
+      <div class="case-stats">
+        <div class="case-stat"><strong>$1.2M</strong><span>Revenue (Q1)</span></div>
+        <div class="case-stat"><strong>85K</strong><span>Followers Gained</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Case 3: Image Left, Text Right -->
+  <div class="case-block fade-in">
+    <div class="case-img">
+      <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=800&q=80" alt="Apex Fitness project" loading="lazy">
+    </div>
+    <div class="case-text">
+      <div class="tag">Web Design</div>
+      <h3>Apex Fitness Platform</h3>
+      <p>UX/UI design and development for a fitness SaaS with 200K+ users. We redesigned the entire user journey, resulting in dramatically improved engagement and conversions.</p>
+      <div class="case-stats">
+        <div class="case-stat"><strong>62%</strong><span>Conversion Lift</span></div>
+        <div class="case-stat"><strong>4.8m</strong><span>Avg. Session</span></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="services-section fade-in" id="services">
+  <div class="services-inner">
+    <div class="section-title">
+      <h2>What We <span>Do</span></h2>
+      <p>End-to-end creative services</p>
+    </div>
+    <div class="services-grid">
+      <div class="service-card"><div class="service-num">01</div><h3>Brand Strategy</h3><p>Positioning, messaging, and identity systems that differentiate you in crowded markets.</p></div>
+      <div class="service-card"><div class="service-num">02</div><h3>Visual Identity</h3><p>Logos, color systems, typography, and brand guidelines that scale across every touchpoint.</p></div>
+      <div class="service-card"><div class="service-num">03</div><h3>Web Design & Dev</h3><p>Conversion-focused websites and web apps built with modern technologies.</p></div>
+      <div class="service-card"><div class="service-num">04</div><h3>Digital Marketing</h3><p>Paid media, content strategy, SEO, and social campaigns that drive measurable ROI.</p></div>
+      <div class="service-card"><div class="service-num">05</div><h3>Motion & Video</h3><p>Explainer videos, brand films, social content, and animation.</p></div>
+      <div class="service-card"><div class="service-num">06</div><h3>UX/UI Design</h3><p>Research-driven product design for apps, platforms, and digital experiences.</p></div>
+    </div>
+  </div>
+</div>
+
+<!-- TEAM: playful grid with hover reveals -->
+<div class="team-section fade-in" id="team">
+  <div class="team-inner">
+    <div class="section-title">
+      <h2>The <span>Team</span></h2>
+      <p>Creatives, strategists, and builders</p>
+    </div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-card-bg"><div class="initials">KN</div></div>
+        <div class="team-overlay">
+          <h3>Kai Nakamura</h3>
+          <p class="role">Creative Director</p>
+          <p>15 years leading global campaigns for Fortune 500 brands. Cannes Lions winner.</p>
+          <div class="social"><a href="#">LinkedIn</a><a href="#">Dribbble</a></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-bg" style="background:linear-gradient(135deg,var(--yellow-light),var(--yellow))"><div class="initials">SR</div></div>
+        <div class="team-overlay">
+          <h3>Sofia Reyes</h3>
+          <p class="role">Head of Strategy</p>
+          <p>Ex-McKinsey. Obsessed with consumer insights and brand positioning.</p>
+          <div class="social"><a href="#">LinkedIn</a><a href="#">Twitter</a></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-bg" style="background:linear-gradient(135deg,var(--yellow-dark),var(--yellow-light))"><div class="initials">JL</div></div>
+        <div class="team-overlay">
+          <h3>Jordan Lee</h3>
+          <p class="role">Lead Developer</p>
+          <p>Full-stack architect. Built platforms serving millions of users.</p>
+          <div class="social"><a href="#">GitHub</a><a href="#">LinkedIn</a></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-bg" style="background:linear-gradient(135deg,var(--yellow),#f59e0b)"><div class="initials">MW</div></div>
+        <div class="team-overlay">
+          <h3>Mia Westbrook</h3>
+          <p class="role">Art Director</p>
+          <p>Award-winning visual storyteller with a background in editorial design.</p>
+          <div class="social"><a href="#">Behance</a><a href="#">Instagram</a></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-bg" style="background:linear-gradient(135deg,#f59e0b,var(--yellow))"><div class="initials">DK</div></div>
+        <div class="team-overlay">
+          <h3>Derek Kim</h3>
+          <p class="role">Motion Designer</p>
+          <p>Brings brands to life through animation, video, and interactive experiences.</p>
+          <div class="social"><a href="#">Vimeo</a><a href="#">Dribbble</a></div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-card-bg" style="background:linear-gradient(135deg,var(--yellow-light),var(--yellow-dark))"><div class="initials">AT</div></div>
+        <div class="team-overlay">
+          <h3>Amara Thompson</h3>
+          <p class="role">UX Researcher</p>
+          <p>Data-driven design advocate. Transforms user insights into product direction.</p>
+          <div class="social"><a href="#">LinkedIn</a><a href="#">Medium</a></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- BOLD CONTACT: yellow + dark split -->
+<div class="contact-section" id="contact">
+  <div class="contact-inner">
+    <div class="contact-left">
+      <h2>Let's Build Something Bold</h2>
+      <p>We partner with ambitious brands ready to make their mark. Tell us about your project and we will be in touch within 24 hours.</p>
+      <ul class="contact-details">
+        <li><strong>Email</strong> hello@bold.agency</li>
+        <li><strong>Phone</strong> (555) 789-0123</li>
+        <li><strong>Office</strong> 88 Creative Blvd, Floor 12</li>
+        <li><strong>Hours</strong> Mon-Fri, 9am-6pm</li>
+      </ul>
+    </div>
+    <div class="contact-right">
+      <h3>Start a Project</h3>
+      <div class="form-group"><label>Name</label><input type="text" placeholder="Your name"></div>
+      <div class="form-group"><label>Email</label><input type="email" placeholder="you@company.com"></div>
+      <div class="form-group"><label>Service Needed</label>
+        <select><option>Select a service...</option><option>Brand Strategy</option><option>Visual Identity</option><option>Web Design & Dev</option><option>Digital Marketing</option><option>Motion & Video</option><option>UX/UI Design</option></select>
+      </div>
+      <div class="form-group"><label>Project Details</label><textarea placeholder="Tell us about your project, goals, and timeline..."></textarea></div>
+      <button class="form-submit">Send Message</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo">Bold</div>
+    <ul class="footer-links">
+      <li><a href="#">Dribbble</a></li>
+      <li><a href="#">Behance</a></li>
+      <li><a href="#">LinkedIn</a></li>
+      <li><a href="#">Instagram</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 Bold Creative Agency. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</body>
+</html>

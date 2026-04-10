@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Haven Real Estate</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--green:#2c4a6e;--green-light:#3d6b99;--green-dark:#1a2d47;--gold:#d4a373;--bg:#0e1420;--bg2:#151e2e;--text:#e8eaed;--text-muted:#8b9bb5}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+/* NAV */
+nav{background:rgba(14,20,32,.95);backdrop-filter:blur(10px);position:fixed;top:0;left:0;right:0;z-index:100;border-bottom:1px solid rgba(44,74,110,.3)}
+nav .inner{display:flex;align-items:center;justify-content:space-between;height:70px;max-width:1400px;margin:0 auto;padding:0 32px}
+.logo{font-size:1.6rem;font-weight:700;color:var(--gold);letter-spacing:2px}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text-muted);font-size:.9rem;transition:color .3s}
+.nav-links a:hover{color:var(--gold)}
+.nav-cta{background:var(--green);color:#fff;padding:10px 24px;border-radius:6px;font-size:.85rem;font-weight:600;transition:background .3s}
+.nav-cta:hover{background:var(--green-light)}
+
+/* SEARCH-FIRST HERO */
+.search-hero{padding:140px 32px 80px;text-align:center;background:linear-gradient(180deg,rgba(14,20,32,0.6),var(--bg)),url('https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?w=1200&q=80') center/cover no-repeat;min-height:60vh;display:flex;flex-direction:column;justify-content:center;align-items:center}
+.search-hero h1{font-size:clamp(2rem,5vw,3.2rem);font-weight:300;margin-bottom:12px;letter-spacing:-1px}
+.search-hero h1 span{color:var(--gold);font-weight:700}
+.search-hero p{color:var(--text-muted);font-size:1.05rem;margin-bottom:40px}
+
+/* BIG SEARCH BAR WITH FILTERS */
+.search-box{background:var(--bg2);border:1px solid rgba(44,74,110,.4);border-radius:16px;padding:24px 28px;max-width:900px;width:100%;display:grid;grid-template-columns:1fr 1fr 1fr 1fr auto;gap:16px;align-items:end}
+.search-field label{display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:1px;color:var(--text-muted);margin-bottom:6px;text-align:left}
+.search-field input,.search-field select{width:100%;background:rgba(14,20,32,.8);border:1px solid rgba(44,74,110,.3);color:var(--text);padding:14px 16px;border-radius:8px;font-size:.95rem;outline:none;transition:border-color .3s}
+.search-field input:focus,.search-field select:focus{border-color:var(--green)}
+.search-field select option{background:var(--bg2)}
+.search-box button{background:var(--green);color:#fff;border:none;padding:14px 32px;border-radius:8px;font-weight:700;font-size:.9rem;cursor:pointer;transition:background .3s;height:48px}
+.search-box button:hover{background:var(--green-light)}
+
+/* MASONRY PROPERTY GRID */
+.masonry-section{max-width:1400px;margin:0 auto;padding:80px 32px}
+.masonry-section .section-title{text-align:center;margin-bottom:48px}
+.masonry-section .section-title h2{font-size:2rem;font-weight:300}
+.masonry-section .section-title h2 span{color:var(--gold);font-weight:600}
+.masonry-section .section-title p{color:var(--text-muted);margin-top:8px}
+
+.masonry-grid{columns:3;column-gap:24px}
+.masonry-item{break-inside:avoid;margin-bottom:24px;background:var(--bg2);border-radius:14px;overflow:hidden;border:1px solid rgba(44,74,110,.2);transition:transform .3s,box-shadow .3s}
+.masonry-item:hover{transform:translateY(-6px);box-shadow:0 20px 40px rgba(0,0,0,.4)}
+.masonry-item:nth-child(odd) .m-img{height:260px}
+.masonry-item:nth-child(even) .m-img{height:200px}
+.masonry-item:nth-child(3) .m-img{height:320px}
+.m-img{position:relative;overflow:hidden}
+.m-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.masonry-item:hover .m-img img{transform:scale(1.08)}
+.m-badge{position:absolute;top:14px;left:14px;background:var(--gold);color:var(--bg);padding:4px 14px;border-radius:20px;font-size:.7rem;font-weight:700;text-transform:uppercase}
+.m-info{padding:22px}
+.m-price{font-size:1.4rem;font-weight:700;color:var(--gold);margin-bottom:4px}
+.m-address{color:var(--text-muted);font-size:.85rem;margin-bottom:12px}
+.m-details{display:flex;gap:16px;color:var(--text-muted);font-size:.8rem}
+
+/* AGENT CAROUSEL ROW */
+.agents-section{background:var(--bg2);padding:80px 32px}
+.agents-section .section-title{text-align:center;margin-bottom:48px}
+.agents-section .section-title h2{font-size:2rem;font-weight:300}
+.agents-section .section-title h2 span{color:var(--gold);font-weight:600}
+.agents-section .section-title p{color:var(--text-muted);margin-top:8px}
+.agent-row{display:flex;gap:28px;overflow-x:auto;padding:8px 0 16px;scroll-snap-type:x mandatory;max-width:1400px;margin:0 auto}
+.agent-row::-webkit-scrollbar{height:4px}
+.agent-row::-webkit-scrollbar-track{background:rgba(44,74,110,.1)}
+.agent-row::-webkit-scrollbar-thumb{background:var(--green);border-radius:2px}
+.agent-slide{flex:0 0 280px;scroll-snap-align:start;background:var(--bg);border-radius:14px;padding:36px 28px;text-align:center;border:1px solid rgba(44,74,110,.2);transition:transform .3s}
+.agent-slide:hover{transform:translateY(-4px)}
+.agent-photo{width:90px;height:90px;border-radius:50%;margin:0 auto 20px;background:linear-gradient(135deg,var(--green),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1.8rem;font-weight:700;color:var(--bg);overflow:hidden}
+.agent-photo img{width:100%;height:100%;object-fit:cover}
+
+/* LIST YOUR HOME SECTION */
+.list-section{background:var(--bg);padding:80px 32px}
+.list-section .section-title{text-align:center;margin-bottom:48px}
+.list-section .section-title h2{font-size:2rem;font-weight:300}
+.list-section .section-title h2 span{color:var(--gold);font-weight:600}
+.list-section .section-title p{color:var(--text-muted);margin-top:8px}
+.valuation-box{max-width:600px;margin:0 auto;background:var(--bg2);border-radius:16px;padding:48px;border:1px solid rgba(44,74,110,.3)}
+.val-form-group{margin-bottom:20px}
+.val-form-group label{display:block;margin-bottom:8px;color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:1px}
+.val-form-group input,.val-form-group select{width:100%;padding:14px 18px;background:var(--bg);border:1px solid rgba(44,74,110,.3);border-radius:8px;color:var(--text);font-size:1rem;outline:none;transition:border-color .3s}
+.val-form-group input:focus,.val-form-group select:focus{border-color:var(--green)}
+.val-form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.btn-val{width:100%;padding:16px;background:var(--gold);color:var(--bg);border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .3s;text-transform:uppercase;letter-spacing:1px}
+.btn-val:hover{background:#c49362}
+.agent-slide h3{font-size:1.05rem;margin-bottom:4px}
+.agent-slide .role{color:var(--gold);font-size:.82rem;margin-bottom:10px}
+.agent-slide p{color:var(--text-muted);font-size:.82rem}
+
+/* MORTGAGE CALCULATOR */
+.mortgage{padding:80px 32px;max-width:1400px;margin:0 auto}
+.mortgage .section-title{text-align:center;margin-bottom:48px}
+.mortgage .section-title h2{font-size:2rem;font-weight:300}
+.mortgage .section-title h2 span{color:var(--gold);font-weight:600}
+.mortgage .section-title p{color:var(--text-muted);margin-top:8px}
+.mortgage-box{max-width:600px;margin:0 auto;background:var(--bg2);border-radius:16px;padding:48px;border:1px solid rgba(44,74,110,.3)}
+.form-group{margin-bottom:24px}
+.form-group label{display:block;margin-bottom:8px;color:var(--text-muted);font-size:.8rem;text-transform:uppercase;letter-spacing:1px}
+.form-group input{width:100%;padding:14px 18px;background:var(--bg);border:1px solid rgba(44,74,110,.3);border-radius:8px;color:var(--text);font-size:1rem;outline:none;transition:border-color .3s}
+.form-group input:focus{border-color:var(--green)}
+.btn-calc{width:100%;padding:16px;background:var(--green);color:#fff;border:none;border-radius:8px;font-size:1rem;font-weight:600;cursor:pointer;transition:background .3s}
+.btn-calc:hover{background:var(--green-light)}
+
+/* FOOTER */
+footer{background:var(--bg2);padding:60px 32px 30px;border-top:1px solid rgba(44,74,110,.2)}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-bottom:40px}
+.footer-col h4{color:var(--gold);margin-bottom:16px;font-size:.9rem;text-transform:uppercase;letter-spacing:1px}
+.footer-col p,.footer-col a{color:var(--text-muted);font-size:.9rem;display:block;margin-bottom:8px;transition:color .3s}
+.footer-col a:hover{color:var(--gold)}
+.footer-bottom{text-align:center;padding-top:30px;border-top:1px solid rgba(44,74,110,.2);color:var(--text-muted);font-size:.8rem}
+
+.fade-in{opacity:0;transform:translateY(30px);transition:opacity 0.7s ease,transform 0.7s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .search-box{grid-template-columns:1fr 1fr;gap:12px}
+  .search-box button{grid-column:1/-1}
+  .masonry-grid{columns:2}
+}
+@media(max-width:600px){
+  .search-box{grid-template-columns:1fr}
+  .masonry-grid{columns:1}
+  .nav-links,.nav-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="inner">
+    <div class="logo">HAVEN</div>
+    <ul class="nav-links">
+      <li><a href="#properties">Properties</a></li>
+      <li><a href="#agents">Agents</a></li>
+      <li><a href="#mortgage">Mortgage</a></li>
+    </ul>
+    <a href="#list-home" class="nav-cta">List Your Home</a>
+  </div>
+</nav>
+
+<!-- SEARCH-FIRST HERO -->
+<div class="search-hero">
+  <h1>Find Your <span>Haven</span></h1>
+  <p>Discover exceptional properties in the most sought-after neighborhoods.</p>
+  <div class="search-box">
+    <div class="search-field">
+      <label>Location</label>
+      <input type="text" placeholder="City, ZIP, or neighborhood...">
+    </div>
+    <div class="search-field">
+      <label>Price Range</label>
+      <select>
+        <option>Any Price</option>
+        <option>$200k - $500k</option>
+        <option>$500k - $1M</option>
+        <option>$1M - $2M</option>
+        <option>$2M+</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Property Type</label>
+      <select>
+        <option>All Types</option>
+        <option>Single Family</option>
+        <option>Condo</option>
+        <option>Townhouse</option>
+        <option>Multi-Family</option>
+      </select>
+    </div>
+    <div class="search-field">
+      <label>Bedrooms</label>
+      <select>
+        <option>Any</option>
+        <option>1+</option>
+        <option>2+</option>
+        <option>3+</option>
+        <option>4+</option>
+      </select>
+    </div>
+    <button>Search</button>
+  </div>
+</div>
+
+<!-- MASONRY PROPERTY GRID -->
+<div class="masonry-section" id="properties">
+  <div class="section-title">
+    <h2>Featured <span>Properties</span></h2>
+    <p>Hand-picked listings from our top agents</p>
+  </div>
+  <div class="masonry-grid">
+    <div class="masonry-item fade-in">
+      <div class="m-img"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" alt="Modern home exterior" loading="lazy"><span class="m-badge">New</span></div>
+      <div class="m-info"><div class="m-price">$1,250,000</div><div class="m-address">742 Evergreen Terrace, Maplewood</div><div class="m-details"><span>4 Beds</span><span>3 Baths</span><span>2,800 sqft</span></div></div>
+    </div>
+    <div class="masonry-item fade-in">
+      <div class="m-img"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80" alt="Luxury home interior" loading="lazy"><span class="m-badge">Open House</span></div>
+      <div class="m-info"><div class="m-price">$875,000</div><div class="m-address">1024 Birch Lane, Oakridge</div><div class="m-details"><span>3 Beds</span><span>2 Baths</span><span>2,100 sqft</span></div></div>
+    </div>
+    <div class="masonry-item fade-in">
+      <div class="m-img"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&q=80" alt="Property with pool" loading="lazy"><span class="m-badge">Reduced</span></div>
+      <div class="m-info"><div class="m-price">$2,100,000</div><div class="m-address">88 Summit Drive, Highland Park</div><div class="m-details"><span>5 Beds</span><span>4 Baths</span><span>4,200 sqft</span></div></div>
+    </div>
+    <div class="masonry-item fade-in">
+      <div class="m-img" style="height:240px"><img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?w=400&q=80" alt="Charming cottage" loading="lazy"><span class="m-badge">Featured</span></div>
+      <div class="m-info"><div class="m-price">$640,000</div><div class="m-address">55 Willow Court, Riverside</div><div class="m-details"><span>2 Beds</span><span>2 Baths</span><span>1,600 sqft</span></div></div>
+    </div>
+    <div class="masonry-item fade-in">
+      <div class="m-img" style="height:180px"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?w=400&q=80" alt="Modern condo" loading="lazy"></div>
+      <div class="m-info"><div class="m-price">$425,000</div><div class="m-address">200 Lakeview Blvd #12, Oakridge</div><div class="m-details"><span>1 Bed</span><span>1 Bath</span><span>980 sqft</span></div></div>
+    </div>
+    <div class="masonry-item fade-in">
+      <div class="m-img" style="height:280px"><img src="https://images.unsplash.com/photo-1600566753190-17f0baa2a6c3?w=400&q=80" alt="Estate property" loading="lazy"><span class="m-badge">Luxury</span></div>
+      <div class="m-info"><div class="m-price">$3,800,000</div><div class="m-address">1 Hilltop Estate, Highland Park</div><div class="m-details"><span>6 Beds</span><span>5 Baths</span><span>6,400 sqft</span></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- AGENT CAROUSEL -->
+<div class="agents-section" id="agents">
+  <div class="section-title">
+    <h2>Our <span>Agents</span></h2>
+    <p>Experienced professionals dedicated to your success</p>
+  </div>
+  <div class="agent-row">
+    <div class="agent-slide">
+      <div class="agent-photo"><img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=300&q=80" alt="Sarah Reynolds" loading="lazy"></div>
+      <h3>Sarah Reynolds</h3>
+      <p class="role">Senior Agent</p>
+      <p>15 years of experience in luxury residential properties</p>
+    </div>
+    <div class="agent-slide">
+      <div class="agent-photo"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80" alt="Michael Chen" loading="lazy"></div>
+      <h3>Michael Chen</h3>
+      <p class="role">Buyer Specialist</p>
+      <p>First-time buyer expert with 200+ successful closings</p>
+    </div>
+    <div class="agent-slide">
+      <div class="agent-photo"><img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=300&q=80" alt="Laura Patel" loading="lazy"></div>
+      <h3>Laura Patel</h3>
+      <p class="role">Commercial Lead</p>
+      <p>Specializing in commercial and investment properties</p>
+    </div>
+    <div class="agent-slide">
+      <div class="agent-photo"><img src="https://images.unsplash.com/photo-1560250097-0b93528c311a?w=300&q=80" alt="James Williams" loading="lazy"></div>
+      <h3>James Williams</h3>
+      <p class="role">Listing Agent</p>
+      <p>Record-setting sales in the greater metro area</p>
+    </div>
+  </div>
+</div>
+
+<!-- MORTGAGE -->
+<div class="mortgage" id="mortgage">
+  <div class="section-title">
+    <h2>Mortgage <span>Calculator</span></h2>
+    <p>Estimate your monthly payment</p>
+  </div>
+  <div class="mortgage-box">
+    <div class="form-group"><label>Home Price</label><input type="text" placeholder="$500,000"></div>
+    <div class="form-group"><label>Down Payment</label><input type="text" placeholder="$100,000"></div>
+    <div class="form-group"><label>Interest Rate (%)</label><input type="text" placeholder="6.5"></div>
+    <div class="form-group"><label>Loan Term (Years)</label><input type="text" placeholder="30"></div>
+    <button class="btn-calc">Calculate Payment</button>
+  </div>
+</div>
+
+<!-- LIST YOUR HOME -->
+<div class="list-section" id="list-home">
+  <div class="section-title">
+    <h2>List Your <span>Home</span></h2>
+    <p>Get a free home valuation from our expert agents</p>
+  </div>
+  <div class="valuation-box">
+    <div class="val-form-group"><label>Street Address</label><input type="text" placeholder="742 Evergreen Terrace"></div>
+    <div class="val-form-group"><label>City, State, ZIP</label><input type="text" placeholder="Maplewood, NJ 07040"></div>
+    <div class="val-form-row">
+      <div class="val-form-group"><label>Bedrooms</label>
+        <select><option>1</option><option>2</option><option selected>3</option><option>4</option><option>5</option><option>6+</option></select>
+      </div>
+      <div class="val-form-group"><label>Bathrooms</label>
+        <select><option>1</option><option>1.5</option><option selected>2</option><option>2.5</option><option>3</option><option>3.5</option><option>4+</option></select>
+      </div>
+    </div>
+    <div class="val-form-row">
+      <div class="val-form-group"><label>Approx. Square Feet</label><input type="text" placeholder="2,200"></div>
+      <div class="val-form-group"><label>Property Type</label>
+        <select><option>Single Family</option><option>Condo</option><option>Townhouse</option><option>Multi-Family</option></select>
+      </div>
+    </div>
+    <div class="val-form-group"><label>Your Email</label><input type="email" placeholder="you@email.com"></div>
+    <button class="btn-val">Get My Free Estimate</button>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Haven</h4><p>Premium real estate services since 2005. Helping families find their perfect home.</p></div>
+      <div class="footer-col"><h4>Quick Links</h4><a href="#">Buy a Home</a><a href="#">Sell Your Home</a><a href="#">Rentals</a><a href="#">Market Reports</a></div>
+      <div class="footer-col"><h4>Resources</h4><a href="#">Mortgage Guide</a><a href="#">First-Time Buyers</a><a href="#">Blog</a><a href="#">FAQ</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>123 Market Street, Suite 400</p><p>(555) 234-5678</p><p>hello@haven-realty.com</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Haven Real Estate. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</body>
+</html>

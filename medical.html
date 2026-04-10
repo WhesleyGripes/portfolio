@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vita Medical Practice</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--teal:#0d9488;--teal-light:#14b8a6;--teal-dark:#0f766e;--bg:#ffffff;--bg2:#f0fdfa;--bg3:#f8fafc;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+/* TOP NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+nav .inner{max-width:1200px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:72px;padding:0 32px}
+.logo{font-size:1.5rem;font-weight:700;color:var(--teal)}
+.logo span{color:var(--text)}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text-muted);font-size:.88rem;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--teal)}
+.nav-cta{background:var(--teal);color:#fff;padding:10px 24px;border-radius:8px;font-size:.85rem;font-weight:600;transition:background .3s}
+.nav-cta:hover{background:var(--teal-dark)}
+
+/* HERO */
+.hero{padding:140px 32px 80px;background:linear-gradient(135deg,#f0fdfa 0%,#ccfbf1 50%,#ffffff 100%);text-align:center}
+.hero-inner{max-width:800px;margin:0 auto}
+.hero h1{font-size:clamp(2.2rem,5vw,3.4rem);font-weight:700;color:var(--text);margin-bottom:16px}
+.hero h1 span{color:var(--teal)}
+.hero p{font-size:1.1rem;color:var(--text-muted);margin-bottom:36px;max-width:600px;margin-left:auto;margin-right:auto}
+.hero-btns{display:flex;gap:16px;justify-content:center;flex-wrap:wrap}
+.btn-primary{background:var(--teal);color:#fff;padding:14px 36px;border-radius:8px;font-weight:600;font-size:.9rem;transition:all .3s;display:inline-block}
+.btn-primary:hover{background:var(--teal-dark);transform:translateY(-2px)}
+.btn-secondary{background:transparent;color:var(--teal);padding:14px 36px;border-radius:8px;font-weight:600;font-size:.9rem;border:2px solid var(--teal);transition:all .3s;display:inline-block}
+.btn-secondary:hover{background:var(--teal);color:#fff}
+.hero-trust{display:flex;justify-content:center;gap:32px;margin-top:48px;flex-wrap:wrap}
+.hero-trust .item{text-align:center}
+.hero-trust .number{font-size:2rem;font-weight:800;color:var(--teal)}
+.hero-trust .label{font-size:.78rem;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px}
+
+/* SECTIONS */
+.section{max-width:1200px;margin:0 auto;padding:80px 32px}
+.section-alt{background:var(--bg2)}
+.section-title{text-align:center;margin-bottom:48px}
+.section-title h2{font-size:2rem;font-weight:700;color:var(--text);margin-bottom:8px}
+.section-title h2 span{color:var(--teal)}
+.section-title p{color:var(--text-muted);font-size:.95rem}
+
+/* SERVICES GRID */
+.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto;padding:0 32px}
+.service-card{background:#fff;padding:32px 28px;border-radius:14px;border:1px solid var(--border);transition:transform .3s,box-shadow .3s;text-align:center}
+.service-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(13,148,136,.1)}
+.service-icon{width:56px;height:56px;background:linear-gradient(135deg,var(--teal),var(--teal-light));border-radius:14px;display:flex;align-items:center;justify-content:center;margin:0 auto 18px;font-size:1.4rem;color:#fff}
+.service-card h3{font-size:1.05rem;margin-bottom:8px;color:var(--text)}
+.service-card p{color:var(--text-muted);font-size:.85rem;line-height:1.7}
+
+/* DOCTORS */
+.doctor-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;max-width:1200px;margin:0 auto;padding:0 32px}
+.doctor-card{background:#fff;border-radius:16px;overflow:hidden;border:1px solid var(--border);transition:transform .3s,box-shadow .3s}
+.doctor-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(13,148,136,.1)}
+.doctor-img{height:300px;overflow:hidden;background:linear-gradient(135deg,#ccfbf1,#0d9488)}
+.doctor-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.doctor-card:hover .doctor-img img{transform:scale(1.05)}
+.doctor-info{padding:24px;text-align:center}
+.doctor-info h3{font-size:1.15rem;margin-bottom:4px;color:var(--text)}
+.doctor-info .specialty{color:var(--teal);font-size:.82rem;font-weight:600;margin-bottom:10px}
+.doctor-info p{color:var(--text-muted);font-size:.84rem}
+
+/* TESTIMONIALS */
+.testimonials-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;max-width:1200px;margin:0 auto;padding:0 32px}
+.testimonial-card{background:#fff;padding:32px;border-radius:14px;border:1px solid var(--border)}
+.testimonial-card .stars{color:var(--teal);font-size:1.1rem;margin-bottom:14px;letter-spacing:2px}
+.testimonial-card blockquote{font-size:.92rem;color:var(--text);margin-bottom:18px;font-style:italic;line-height:1.8}
+.testimonial-card .author{display:flex;align-items:center;gap:12px}
+.author-avatar{width:40px;height:40px;border-radius:50%;background:linear-gradient(135deg,var(--teal),var(--teal-light));display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:.8rem}
+.author-name{font-weight:600;font-size:.85rem}
+.author-detail{color:var(--text-muted);font-size:.75rem}
+
+/* INSURANCE */
+.insurance-strip{display:flex;justify-content:center;flex-wrap:wrap;gap:16px;max-width:1200px;margin:0 auto;padding:0 32px}
+.insurance-logo{background:#fff;padding:14px 28px;border-radius:10px;border:1px solid var(--border);font-weight:600;color:var(--text);font-size:.88rem;transition:transform .3s,box-shadow .3s}
+.insurance-logo:hover{transform:translateY(-2px);box-shadow:0 4px 12px rgba(0,0,0,.06)}
+
+/* BOOKING FORM */
+.booking-wrapper{max-width:680px;margin:0 auto}
+.booking-form{background:#fff;padding:40px;border-radius:16px;border:1px solid var(--border);box-shadow:0 4px 24px rgba(0,0,0,.04)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;margin-bottom:6px;font-size:.82rem;font-weight:600;color:var(--text)}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:12px 16px;border:1px solid var(--border);border-radius:8px;font-size:.92rem;outline:none;transition:border-color .3s;color:var(--text);background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--teal)}
+.form-group textarea{resize:vertical;min-height:90px}
+
+/* FOOTER */
+footer{background:var(--text);color:#fff;padding:60px 32px 30px}
+.footer-inner{max-width:1200px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:40px;margin-bottom:40px}
+.footer-col h4{color:var(--teal-light);margin-bottom:14px;font-size:.85rem;text-transform:uppercase;letter-spacing:1px}
+.footer-col p,.footer-col a{color:rgba(255,255,255,.6);font-size:.88rem;display:block;margin-bottom:8px;transition:color .3s}
+.footer-col a:hover{color:var(--teal-light)}
+.footer-bottom{text-align:center;padding-top:30px;border-top:1px solid rgba(255,255,255,.1);color:rgba(255,255,255,.4);font-size:.8rem}
+
+/* FADE */
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.6s ease,transform 0.6s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:900px){
+  .services-grid,.doctor-grid,.testimonials-grid{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .nav-links{display:none}
+  .hero-trust{gap:20px}
+}
+</style>
+</head>
+<body>
+
+<!-- TOP NAV -->
+<nav>
+  <div class="inner">
+    <div class="logo">Vita<span>Med</span></div>
+    <ul class="nav-links">
+      <li><a href="#services">Services</a></li>
+      <li><a href="#doctors">Doctors</a></li>
+      <li><a href="#testimonials">Reviews</a></li>
+      <li><a href="#insurance">Insurance</a></li>
+    </ul>
+    <a href="#booking" class="nav-cta">Book Appointment</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-inner">
+    <h1>Your Health, <span>Our Priority</span></h1>
+    <p>Comprehensive, compassionate medical care for the whole family. Board-certified physicians, modern facilities, and same-day appointments available.</p>
+    <div class="hero-btns">
+      <a href="#booking" class="btn-primary">Schedule a Visit</a>
+      <a href="#services" class="btn-secondary">Our Services</a>
+    </div>
+    <div class="hero-trust">
+      <div class="item"><div class="number">15K+</div><div class="label">Patients Served</div></div>
+      <div class="item"><div class="number">25+</div><div class="label">Years of Care</div></div>
+      <div class="item"><div class="number">4.9</div><div class="label">Patient Rating</div></div>
+      <div class="item"><div class="number">98%</div><div class="label">Would Recommend</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- SERVICES -->
+<div class="section-alt">
+  <div class="section" id="services">
+    <div class="section-title">
+      <h2>Our <span>Services</span></h2>
+      <p>Comprehensive care across every stage of life</p>
+    </div>
+  </div>
+  <div class="services-grid fade-in" style="padding-bottom:80px">
+    <div class="service-card">
+      <div class="service-icon">&#9764;</div>
+      <h3>Primary Care</h3>
+      <p>Annual exams, preventive screenings, and chronic disease management for adults of all ages.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9786;</div>
+      <h3>Pediatrics</h3>
+      <p>Well-child visits, vaccinations, and developmental assessments from birth through adolescence.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9829;</div>
+      <h3>Cardiology</h3>
+      <p>Heart health screenings, EKGs, stress testing, and cardiovascular risk assessment.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9784;</div>
+      <h3>Dermatology</h3>
+      <p>Skin exams, acne treatment, mole checks, and cosmetic dermatology services.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#9752;</div>
+      <h3>Mental Health</h3>
+      <p>Therapy, counseling, and psychiatric services for anxiety, depression, and more.</p>
+    </div>
+    <div class="service-card">
+      <div class="service-icon">&#8862;</div>
+      <h3>Lab &amp; Imaging</h3>
+      <p>On-site bloodwork, X-rays, and diagnostic imaging for fast, accurate results.</p>
+    </div>
+  </div>
+</div>
+
+<!-- DOCTORS -->
+<div class="section" id="doctors">
+  <div class="section-title">
+    <h2>Meet Our <span>Doctors</span></h2>
+    <p>Board-certified physicians committed to your wellbeing</p>
+  </div>
+  <div class="doctor-grid fade-in">
+    <div class="doctor-card">
+      <div class="doctor-img"><img src="https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&q=80" alt="Dr. James Rivera" loading="lazy"></div>
+      <div class="doctor-info">
+        <h3>Dr. James Rivera</h3>
+        <p class="specialty">Internal Medicine</p>
+        <p>20 years experience. Harvard Medical School graduate. Bilingual provider specializing in preventive care.</p>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-img"><img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&q=80" alt="Dr. Elena Kim" loading="lazy"></div>
+      <div class="doctor-info">
+        <h3>Dr. Elena Kim</h3>
+        <p class="specialty">Family Medicine</p>
+        <p>15 years experience. Johns Hopkins graduate. Patient-centered approach to whole-family wellness.</p>
+      </div>
+    </div>
+    <div class="doctor-card">
+      <div class="doctor-img"><img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&q=80" alt="Dr. Marcus Okonjo" loading="lazy"></div>
+      <div class="doctor-info">
+        <h3>Dr. Marcus Okonjo</h3>
+        <p class="specialty">Cardiology</p>
+        <p>Interventional cardiologist and heart health advocate. Board certified in cardiovascular disease.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- TESTIMONIALS -->
+<div class="section-alt">
+  <div class="section" id="testimonials">
+    <div class="section-title">
+      <h2>Patient <span>Reviews</span></h2>
+      <p>Hear from the people we serve</p>
+    </div>
+  </div>
+  <div class="testimonials-grid fade-in" style="padding-bottom:80px">
+    <div class="testimonial-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"Dr. Kim is the most thorough and caring doctor I've ever had. She actually listens and takes the time to explain everything."</blockquote>
+      <div class="author">
+        <div class="author-avatar">ML</div>
+        <div><div class="author-name">Maria L.</div><div class="author-detail">Patient since 2019</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"The online booking system is so convenient. I was able to get a same-day appointment and the staff was incredibly friendly."</blockquote>
+      <div class="author">
+        <div class="author-avatar">DT</div>
+        <div><div class="author-name">David T.</div><div class="author-detail">Patient since 2021</div></div>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <blockquote>"My kids love Dr. Rivera! He makes every visit fun and stress-free. We wouldn't go anywhere else for our family's care."</blockquote>
+      <div class="author">
+        <div class="author-avatar">SK</div>
+        <div><div class="author-name">Sarah K.</div><div class="author-detail">Patient since 2020</div></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- INSURANCE -->
+<div class="section" id="insurance">
+  <div class="section-title">
+    <h2>Insurance <span>Accepted</span></h2>
+    <p>We work with most major insurance providers</p>
+  </div>
+  <div class="insurance-strip fade-in">
+    <div class="insurance-logo">Aetna</div>
+    <div class="insurance-logo">Blue Cross Blue Shield</div>
+    <div class="insurance-logo">Cigna</div>
+    <div class="insurance-logo">UnitedHealthcare</div>
+    <div class="insurance-logo">Humana</div>
+    <div class="insurance-logo">Kaiser Permanente</div>
+    <div class="insurance-logo">Medicare</div>
+    <div class="insurance-logo">Medicaid</div>
+    <div class="insurance-logo">Tricare</div>
+    <div class="insurance-logo">Oscar Health</div>
+  </div>
+</div>
+
+<!-- BOOKING -->
+<div class="section-alt">
+  <div class="section" id="booking">
+    <div class="section-title">
+      <h2>Book an <span>Appointment</span></h2>
+      <p>Schedule your visit in minutes -- we will confirm within the hour</p>
+    </div>
+    <div class="booking-wrapper fade-in">
+      <div class="booking-form">
+        <div class="form-row">
+          <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"></div>
+          <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe"></div>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com"></div>
+          <div class="form-group"><label>Phone</label><input type="tel" placeholder="(555) 123-4567"></div>
+        </div>
+        <div class="form-group"><label>Department</label>
+          <select><option>Select a department...</option><option>Primary Care</option><option>Pediatrics</option><option>Cardiology</option><option>Dermatology</option><option>Mental Health</option></select>
+        </div>
+        <div class="form-row">
+          <div class="form-group"><label>Preferred Date</label><input type="date"></div>
+          <div class="form-group"><label>Preferred Time</label>
+            <select><option>Morning (8am-12pm)</option><option>Afternoon (12pm-4pm)</option><option>Late (4pm-6pm)</option></select>
+          </div>
+        </div>
+        <div class="form-group"><label>Notes</label><textarea placeholder="Briefly describe your reason for visiting..."></textarea></div>
+        <button class="btn-primary" style="width:100%;border:none;cursor:pointer;padding:16px;font-size:.95rem">Request Appointment</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>VitaMed</h4><p>Comprehensive, compassionate medical care for the whole family since 2001.</p></div>
+      <div class="footer-col"><h4>Services</h4><a href="#">Primary Care</a><a href="#">Pediatrics</a><a href="#">Cardiology</a><a href="#">Dermatology</a></div>
+      <div class="footer-col"><h4>Hours</h4><p>Mon-Fri: 8am - 6pm</p><p>Saturday: 9am - 2pm</p><p>Sunday: Closed</p></div>
+      <div class="footer-col"><h4>Contact</h4><p>200 Wellness Drive, Suite 100</p><p>(555) 987-6543</p><p>info@vitamedical.com</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Vita Medical Practice. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</body>
+</html>

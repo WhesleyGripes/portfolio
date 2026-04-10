@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rise - Building a Better Tomorrow</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--blue:#2563eb;--blue-light:#3b82f6;--blue-dark:#1d4ed8;--sky:#dbeafe;--bg:#ffffff;--bg2:#f8fafc;--bg3:#eff6ff;--text:#1e293b;--text-muted:#64748b;--border:#e2e8f0;--red:#ef4444}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7}
+a{text-decoration:none;color:inherit}
+
+/* NAV - simple, not sticky (storytelling flow) */
+nav{background:#fff;border-bottom:1px solid var(--border);position:relative;z-index:50}
+nav .nav-inner{max-width:1100px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:64px;padding:0 24px}
+.logo{font-size:1.4rem;font-weight:800;color:var(--blue)}
+.nav-links{display:flex;gap:24px;list-style:none}
+.nav-links a{color:var(--text-muted);font-size:.88rem;font-weight:500;transition:color .3s}
+.nav-links a:hover{color:var(--blue)}
+
+/* STORYTELLING OPENING - big text, no typical hero */
+.story-open{max-width:800px;margin:0 auto;padding:100px 24px 80px;text-align:center}
+.story-open h1{font-size:clamp(2.5rem,6vw,4rem);font-weight:800;line-height:1.15;margin-bottom:24px}
+.story-open h1 span{color:var(--blue)}
+.story-open p{font-size:1.2rem;color:var(--text-muted);max-width:600px;margin:0 auto 36px;line-height:1.8}
+.story-open .btn-red{background:var(--red);color:#fff;padding:18px 44px;border-radius:10px;font-weight:700;font-size:1rem;transition:all .3s;display:inline-block}
+.story-open .btn-red:hover{background:#dc2626;transform:translateY(-2px)}
+
+/* FULL-WIDTH IMAGE BREAK */
+.image-break{width:100%;height:60vh;min-height:350px;overflow:hidden;position:relative}
+.image-break img{width:100%;height:100%;object-fit:cover}
+.image-break.parallax img{transform:translateY(0);transition:transform 0s}
+
+/* BIG IMPACT NUMBERS */
+.impact-section{background:var(--blue);color:#fff;padding:80px 24px}
+.impact-inner{max-width:1000px;margin:0 auto;display:grid;grid-template-columns:repeat(4,1fr);gap:32px;text-align:center}
+.impact-item .number{font-size:3.2rem;font-weight:800;line-height:1}
+.impact-item .label{font-size:.88rem;opacity:.75;margin-top:8px}
+
+/* NARRATIVE TEXT BLOCKS */
+.narrative{max-width:700px;margin:0 auto;padding:80px 24px}
+.narrative h2{font-size:2rem;font-weight:700;margin-bottom:20px;line-height:1.3}
+.narrative h2 span{color:var(--blue)}
+.narrative p{color:var(--text-muted);font-size:1.05rem;line-height:1.9;margin-bottom:20px}
+.narrative blockquote{border-left:4px solid var(--blue);padding:20px 24px;margin:32px 0;font-style:italic;color:var(--text);font-size:1.1rem;line-height:1.7;background:var(--bg3);border-radius:0 12px 12px 0}
+.narrative .btn-blue{background:var(--blue);color:#fff;padding:14px 32px;border-radius:10px;font-weight:700;font-size:.9rem;transition:all .3s;display:inline-block;margin-top:12px}
+.narrative .btn-blue:hover{background:var(--blue-dark);transform:translateY(-2px)}
+
+/* DONATION TIERS */
+.donate-section{background:var(--bg3);padding:80px 24px}
+.donate-inner{max-width:1100px;margin:0 auto}
+.donate-header{text-align:center;margin-bottom:48px}
+.donate-header h2{font-size:2.2rem;font-weight:800;margin-bottom:10px}
+.donate-header h2 span{color:var(--blue)}
+.donate-header p{color:var(--text-muted)}
+.donate-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px}
+.donate-card{background:#fff;border-radius:16px;padding:32px 24px;text-align:center;border:2px solid var(--border);transition:border-color .3s,transform .3s}
+.donate-card:hover{border-color:var(--blue);transform:translateY(-6px)}
+.donate-card.featured{border-color:var(--blue);background:var(--bg3)}
+.donate-amount{font-size:2.2rem;font-weight:800;color:var(--blue);margin-bottom:6px}
+.donate-name{font-size:1rem;font-weight:700;margin-bottom:14px;text-transform:uppercase;letter-spacing:1px}
+.donate-card p{color:var(--text-muted);font-size:.88rem;margin-bottom:20px}
+.donate-card .btn-blue{display:block;text-align:center;background:var(--blue);color:#fff;padding:12px;border-radius:10px;font-weight:700;font-size:.88rem;transition:background .3s}
+.donate-card .btn-blue:hover{background:var(--blue-dark)}
+
+/* VOLUNTEER FORM */
+.volunteer-section{max-width:700px;margin:0 auto;padding:80px 24px}
+.volunteer-section h2{font-size:2rem;font-weight:700;margin-bottom:8px;text-align:center}
+.volunteer-section h2 span{color:var(--blue)}
+.volunteer-section > p{text-align:center;color:var(--text-muted);margin-bottom:36px}
+.volunteer-form{background:var(--bg2);padding:40px;border-radius:20px;border:1px solid var(--border)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.form-group{margin-bottom:18px}
+.form-group label{display:block;margin-bottom:5px;font-size:.82rem;font-weight:600}
+.form-group input,.form-group select,.form-group textarea{width:100%;padding:13px 16px;border:1px solid var(--border);border-radius:10px;font-size:.92rem;outline:none;transition:border-color .3s;color:var(--text);background:#fff}
+.form-group input:focus,.form-group select:focus,.form-group textarea:focus{border-color:var(--blue)}
+.form-group textarea{resize:vertical;min-height:90px}
+.volunteer-form .btn-blue{width:100%;text-align:center;border:none;cursor:pointer;font-size:1rem;padding:16px;background:var(--blue);color:#fff;border-radius:10px;font-weight:700;transition:background .3s}
+.volunteer-form .btn-blue:hover{background:var(--blue-dark)}
+
+/* STICKY DONATION BAR at bottom */
+.sticky-donate{position:fixed;bottom:0;left:0;right:0;background:rgba(239,68,68,.97);color:#fff;z-index:90;transform:translateY(100%);transition:transform .4s ease;backdrop-filter:blur(8px)}
+.sticky-donate.visible{transform:translateY(0)}
+.sticky-inner{max-width:1100px;margin:0 auto;padding:14px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+.sticky-inner p{font-weight:600;font-size:.95rem}
+.sticky-inner .btn-white{background:#fff;color:var(--red);padding:10px 28px;border-radius:8px;font-weight:700;font-size:.85rem;transition:transform .3s;flex-shrink:0}
+.sticky-inner .btn-white:hover{transform:translateY(-1px)}
+
+/* Counting animation placeholder */
+.count-up{display:inline-block}
+
+/* FOOTER */
+footer{background:var(--text);color:rgba(255,255,255,.6);padding:60px 24px 30px;margin-bottom:52px}
+.footer-inner{max-width:1100px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:36px}
+.footer-col h4{color:#fff;margin-bottom:14px;font-size:.82rem;text-transform:uppercase;letter-spacing:1px}
+.footer-col p,.footer-col a{color:rgba(255,255,255,.5);font-size:.88rem;display:block;margin-bottom:7px;transition:color .3s}
+.footer-col a:hover{color:var(--blue-light)}
+.footer-bottom{text-align:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.78rem}
+
+@media(max-width:800px){
+  .impact-inner{grid-template-columns:repeat(2,1fr);gap:24px}
+  .donate-grid{grid-template-columns:1fr 1fr}
+  .form-row{grid-template-columns:1fr}
+  .nav-links{display:none}
+}
+@media(max-width:500px){
+  .donate-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIMPLE NAV (non-sticky, storytelling flow) -->
+<nav>
+  <div class="nav-inner">
+    <div class="logo">Rise</div>
+    <ul class="nav-links">
+      <li><a href="#impact">Impact</a></li>
+      <li><a href="#story">Our Story</a></li>
+      <li><a href="#donate">Donate</a></li>
+      <li><a href="#volunteer">Volunteer</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- STORYTELLING OPENING -->
+<div class="story-open">
+  <h1>Together We <span>Rise</span></h1>
+  <p>Empowering communities, transforming lives. Every dollar, every hour, every act of kindness makes a difference.</p>
+  <a href="#donate" class="btn-red">Donate Now</a>
+</div>
+
+<!-- FULL-WIDTH IMAGE BREAK -->
+<div class="image-break">
+  <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&q=80" alt="Helping hands community" loading="lazy">
+</div>
+
+<!-- BIG IMPACT NUMBERS -->
+<div class="impact-section" id="impact">
+  <div class="impact-inner">
+    <div class="impact-item"><div class="number"><span class="count-up" data-target="12500">0</span>+</div><div class="label">Lives Changed</div></div>
+    <div class="impact-item"><div class="number">$<span class="count-up" data-target="4200000" data-prefix="">0</span></div><div class="label">Raised in 2025</div></div>
+    <div class="impact-item"><div class="number"><span class="count-up" data-target="340">0</span></div><div class="label">Active Volunteers</div></div>
+    <div class="impact-item"><div class="number"><span class="count-up" data-target="28">0</span></div><div class="label">Communities Served</div></div>
+  </div>
+</div>
+
+<!-- NARRATIVE TEXT SECTION -->
+<div class="narrative" id="story">
+  <h2>Why We <span>Exist</span></h2>
+  <p>Rise was founded in 2012 with a simple belief: no one should be held back by circumstances beyond their control. What began as a small food drive in a church basement has grown into a movement that spans 28 communities.</p>
+  <blockquote>"Rise didn't just give me a meal. They gave me a mentor, a job, and the confidence to believe I could build something better." -- Marcus, program graduate</blockquote>
+  <p>Today, we provide food security, job training, youth mentorship, and housing assistance. 92 cents of every dollar goes directly to programs.</p>
+  <a href="#" class="btn-blue">Read More Stories</a>
+</div>
+
+<!-- FULL-WIDTH IMAGE BREAK -->
+<div class="image-break">
+  <img src="https://images.unsplash.com/photo-1509099836639-18ba1795216d?w=1200&q=80" alt="Community impact" loading="lazy">
+</div>
+
+<!-- NARRATIVE CONTINUATION -->
+<div class="narrative">
+  <h2>Our <span>Programs</span></h2>
+  <p>We believe lasting change requires more than a single intervention. Our four pillars work together to address the root causes of poverty and create pathways to self-sufficiency.</p>
+  <p><strong>Food Security:</strong> We operate 12 community pantries and serve over 5,000 meals each week through partnerships with local restaurants and farms.</p>
+  <p><strong>Job Training:</strong> Our workforce development program has placed 850 graduates into full-time employment with an 89% retention rate after one year.</p>
+  <p><strong>Youth Mentorship:</strong> Every young person in our program is paired with a trained mentor. Last year, 96% of our mentees graduated high school on time.</p>
+  <p><strong>Housing Assistance:</strong> We provide emergency housing support and help families navigate the path to stable, long-term housing.</p>
+</div>
+
+<!-- DONATION TIERS -->
+<div class="donate-section" id="donate">
+  <div class="donate-inner">
+    <div class="donate-header">
+      <h2>Make a <span>Difference</span></h2>
+      <p>Choose a giving level that works for you</p>
+    </div>
+    <div class="donate-grid">
+      <div class="donate-card">
+        <div class="donate-amount">$25</div>
+        <div class="donate-name">Supporter</div>
+        <p>Provides 50 meals to families in food-insecure communities.</p>
+        <a href="#" class="btn-blue">Give $25</a>
+      </div>
+      <div class="donate-card featured">
+        <div class="donate-amount">$100</div>
+        <div class="donate-name">Champion</div>
+        <p>Funds one month of job training and career counseling for an adult.</p>
+        <a href="#" class="btn-blue">Give $100</a>
+      </div>
+      <div class="donate-card">
+        <div class="donate-amount">$250</div>
+        <div class="donate-name">Builder</div>
+        <p>Sponsors a young person through our 12-week mentorship program.</p>
+        <a href="#" class="btn-blue">Give $250</a>
+      </div>
+      <div class="donate-card">
+        <div class="donate-amount">$1,000</div>
+        <div class="donate-name">Visionary</div>
+        <p>Provides emergency housing assistance for a family for one month.</p>
+        <a href="#" class="btn-blue">Give $1,000</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- FULL-WIDTH IMAGE BREAK -->
+<div class="image-break">
+  <img src="https://images.unsplash.com/photo-1488521787991-ed7bbaae773c?w=1200&q=80" alt="Community gathering" loading="lazy">
+</div>
+
+<!-- VOLUNTEER FORM -->
+<div class="volunteer-section" id="volunteer">
+  <h2>Join Our <span>Team</span></h2>
+  <p>Volunteer with Rise and make a hands-on impact</p>
+  <div class="volunteer-form">
+    <div class="form-row">
+      <div class="form-group"><label>First Name</label><input type="text" placeholder="Jane"></div>
+      <div class="form-group"><label>Last Name</label><input type="text" placeholder="Doe"></div>
+    </div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="jane@email.com"></div>
+    <div class="form-group"><label>Interest Area</label>
+      <select><option>Select an area...</option><option>Food Programs</option><option>Job Training</option><option>Youth Mentorship</option><option>Housing</option><option>Events & Fundraising</option></select>
+    </div>
+    <div class="form-group"><label>Why do you want to volunteer?</label><textarea placeholder="Tell us a bit about yourself and why you'd like to help..."></textarea></div>
+    <button class="btn-blue">Sign Up to Volunteer</button>
+  </div>
+</div>
+
+<!-- STICKY DONATION BAR -->
+<div class="sticky-donate" id="sticky-bar">
+  <div class="sticky-inner">
+    <p>92% of every dollar goes directly to programs. Make your gift today.</p>
+    <a href="#donate" class="btn-white">Donate Now</a>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Rise</h4><p>A 501(c)(3) nonprofit empowering communities since 2012. EIN: 47-1234567.</p></div>
+      <div class="footer-col"><h4>Programs</h4><a href="#">Food Security</a><a href="#">Job Training</a><a href="#">Youth Mentorship</a><a href="#">Housing</a></div>
+      <div class="footer-col"><h4>Get Involved</h4><a href="#">Donate</a><a href="#">Volunteer</a><a href="#">Partner</a><a href="#">Events</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>1200 Hope Avenue</p><p>(555) 321-9876</p><p>hello@risecharity.org</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Rise. All rights reserved. 92% of donations go directly to programs.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  // Sticky donation bar - show after scrolling past opening
+  var stickyBar = document.getElementById('sticky-bar');
+  var storyOpen = document.querySelector('.story-open');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > storyOpen.offsetHeight) {
+      stickyBar.classList.add('visible');
+    } else {
+      stickyBar.classList.remove('visible');
+    }
+  });
+
+  // Count-up animation for impact numbers
+  var countObserver = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        var el = entry.target;
+        var target = parseInt(el.getAttribute('data-target'));
+        var duration = 2000;
+        var start = 0;
+        var startTime = null;
+
+        function animate(timestamp) {
+          if (!startTime) startTime = timestamp;
+          var progress = Math.min((timestamp - startTime) / duration, 1);
+          // Ease out
+          var eased = 1 - Math.pow(1 - progress, 3);
+          var current = Math.floor(eased * target);
+
+          if (target >= 1000000) {
+            el.textContent = '$' + (current / 1000000).toFixed(1) + 'M';
+          } else if (target >= 1000) {
+            el.textContent = current.toLocaleString();
+          } else {
+            el.textContent = current;
+          }
+
+          if (progress < 1) {
+            requestAnimationFrame(animate);
+          } else {
+            if (target >= 1000000) {
+              el.textContent = '$4.2M';
+            } else {
+              el.textContent = target.toLocaleString();
+            }
+          }
+        }
+        requestAnimationFrame(animate);
+        countObserver.unobserve(el);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.count-up').forEach(function(el) {
+    countObserver.observe(el);
+  });
+});
+</script>
+</body>
+</html>

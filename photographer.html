@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Lens - Photography Portfolio</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--black:#0a0a0a;--bg:#ffffff;--bg2:#f5f5f5;--text:#1a1a1a;--text-muted:#6b6b6b;--border:#e5e5e5}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.7;overflow-x:hidden}
+a{text-decoration:none;color:inherit}
+
+/* NAV - starts hidden, appears on scroll */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;background:rgba(255,255,255,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);transform:translateY(-100%);transition:transform .4s ease}
+nav.visible{transform:translateY(0)}
+nav .nav-inner{max-width:1400px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:60px;padding:0 32px}
+.logo{font-size:1.2rem;font-weight:300;letter-spacing:8px;text-transform:uppercase}
+.nav-links{display:flex;gap:28px;list-style:none}
+.nav-links a{color:var(--text-muted);font-size:.75rem;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-cta{color:var(--text);padding:8px 20px;border:1px solid var(--text);font-size:.7rem;text-transform:uppercase;letter-spacing:2px;transition:all .3s}
+.nav-cta:hover{background:var(--text);color:#fff}
+
+/* FULL-SCREEN OPENING IMAGE */
+.hero-image{height:100vh;width:100%;position:relative;overflow:hidden}
+.hero-image img{width:100%;height:100%;object-fit:cover;animation:slowzoom 30s ease-in-out infinite alternate}
+@keyframes slowzoom{0%{transform:scale(1)}100%{transform:scale(1.08)}}
+.hero-image::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.25)}
+.hero-overlay{position:absolute;bottom:60px;left:48px;z-index:1;color:#fff}
+.hero-overlay h1{font-size:clamp(3rem,8vw,6rem);font-weight:200;letter-spacing:10px;text-transform:uppercase;line-height:1}
+.hero-overlay p{font-size:.9rem;letter-spacing:4px;text-transform:uppercase;opacity:.6;margin-top:8px;font-weight:300}
+
+/* ASYMMETRIC MASONRY GALLERY */
+.gallery-section{padding:8px}
+.masonry-gallery{columns:3;column-gap:8px}
+.gallery-item{break-inside:avoid;margin-bottom:8px;overflow:hidden;position:relative;cursor:pointer}
+.gallery-item img{width:100%;display:block;transition:transform .6s ease,filter .4s ease}
+.gallery-item:hover img{transform:scale(1.04);filter:brightness(1.1)}
+
+/* Varying heights via nth-child */
+.gallery-item:nth-child(1) img{aspect-ratio:3/4}
+.gallery-item:nth-child(2) img{aspect-ratio:1/1}
+.gallery-item:nth-child(3) img{aspect-ratio:4/5}
+.gallery-item:nth-child(4) img{aspect-ratio:16/10}
+.gallery-item:nth-child(5) img{aspect-ratio:3/4}
+.gallery-item:nth-child(6) img{aspect-ratio:1/1.2}
+.gallery-item:nth-child(7) img{aspect-ratio:4/3}
+.gallery-item:nth-child(8) img{aspect-ratio:3/4}
+.gallery-item:nth-child(9) img{aspect-ratio:1/1}
+
+/* MINIMAL ABOUT STRIP */
+.about-strip{max-width:700px;margin:80px auto;padding:0 32px;text-align:center}
+.about-strip h2{font-size:1.4rem;font-weight:300;letter-spacing:4px;text-transform:uppercase;margin-bottom:20px}
+.about-strip .line{width:40px;height:1px;background:var(--text);margin:0 auto 20px}
+.about-strip p{color:var(--text-muted);font-size:.92rem;margin-bottom:14px}
+.about-strip .sig{font-style:italic;font-size:1.1rem;margin-top:24px;color:var(--text)}
+
+/* FULL-WIDTH DIVIDER IMAGE */
+.divider-img{width:100%;height:50vh;overflow:hidden}
+.divider-img img{width:100%;height:100%;object-fit:cover}
+
+/* SERVICES - minimal horizontal layout */
+.services-row{max-width:1100px;margin:80px auto;padding:0 32px;display:grid;grid-template-columns:repeat(4,1fr);gap:40px;text-align:center}
+.service-item h3{font-size:.85rem;text-transform:uppercase;letter-spacing:2px;margin-bottom:10px;font-weight:400}
+.service-item p{color:var(--text-muted);font-size:.85rem}
+.service-item .price{font-size:1.2rem;font-weight:300;margin-top:10px;color:var(--text)}
+
+/* CONTACT - very minimal */
+.contact-section{max-width:560px;margin:0 auto 80px;padding:0 32px}
+.contact-section h2{font-size:1.4rem;font-weight:300;letter-spacing:4px;text-transform:uppercase;text-align:center;margin-bottom:8px}
+.contact-section .line{width:40px;height:1px;background:var(--text);margin:0 auto 12px}
+.contact-section .subtitle{text-align:center;color:var(--text-muted);margin-bottom:40px;font-size:.9rem}
+.form-group{margin-bottom:22px}
+.form-group label{display:block;margin-bottom:6px;font-size:.7rem;text-transform:uppercase;letter-spacing:2px;color:var(--text-muted)}
+.form-group input,.form-group textarea,.form-group select{width:100%;padding:14px 0;background:transparent;border:none;border-bottom:1px solid var(--border);color:var(--text);font-size:1rem;outline:none;transition:border-color .3s;font-family:inherit}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--text)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.submit-btn{background:var(--text);color:#fff;border:none;padding:16px 48px;font-size:.75rem;text-transform:uppercase;letter-spacing:3px;cursor:pointer;transition:opacity .3s;display:block;margin:0 auto}
+.submit-btn:hover{opacity:.8}
+
+/* FOOTER */
+footer{background:var(--black);color:rgba(255,255,255,.5);padding:48px 32px 24px}
+.footer-inner{max-width:1400px;margin:0 auto;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.footer-inner .logo{color:#fff}
+.footer-links{display:flex;gap:24px;list-style:none}
+.footer-links a{color:rgba(255,255,255,.4);font-size:.75rem;text-transform:uppercase;letter-spacing:2px;transition:color .3s}
+.footer-links a:hover{color:#fff}
+.footer-copy{width:100%;text-align:center;margin-top:32px;padding-top:24px;border-top:1px solid rgba(255,255,255,.1);font-size:.7rem}
+
+@media(max-width:900px){
+  .masonry-gallery{columns:2}
+  .services-row{grid-template-columns:1fr 1fr}
+  .hero-overlay{left:24px;bottom:40px}
+}
+@media(max-width:600px){
+  .masonry-gallery{columns:1}
+  .services-row{grid-template-columns:1fr}
+  .form-row{grid-template-columns:1fr}
+  .nav-links,.nav-cta{display:none}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV - hidden initially, appears on scroll -->
+<nav id="main-nav">
+  <div class="nav-inner">
+    <div class="logo">Lens</div>
+    <ul class="nav-links">
+      <li><a href="#gallery">Work</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#services">Services</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <a href="#contact" class="nav-cta">Inquire</a>
+  </div>
+</nav>
+
+<!-- MASSIVE FULL-SCREEN OPENING IMAGE -->
+<div class="hero-image">
+  <img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=1400&q=80" alt="Dramatic landscape" loading="eager">
+  <div class="hero-overlay">
+    <h1>Lens</h1>
+    <p>Moments Captured Forever</p>
+  </div>
+</div>
+
+<!-- ASYMMETRIC MASONRY GALLERY -->
+<div class="gallery-section" id="gallery">
+  <div class="masonry-gallery">
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80" alt="Landscape photography" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80" alt="Nature photography" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80" alt="Mountain vista" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=600&q=80" alt="Forest light" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1447752875215-b2761acb3c5d?w=600&q=80" alt="Trees and pathway" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1433086966358-54859d0ed716?w=600&q=80" alt="Waterfall" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=600&q=80" alt="Landscape" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1469474968028-56623f02e42e?w=600&q=80" alt="Nature scene" loading="lazy"></div>
+    <div class="gallery-item"><img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=600&q=80" alt="Mountain sunset" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- MINIMAL ABOUT -->
+<div class="about-strip" id="about">
+  <h2>About the Artist</h2>
+  <div class="line"></div>
+  <p>I am a visual storyteller based in New York, drawn to the interplay of light, shadow, and raw human emotion. For over a decade, I have documented weddings, portraits, and editorial work across three continents.</p>
+  <p>My approach is quiet and observational. I believe the best photographs happen when people forget there is a camera in the room.</p>
+  <div class="sig">-- Alex Mercer</div>
+</div>
+
+<!-- FULL-WIDTH DIVIDER -->
+<div class="divider-img">
+  <img src="https://images.unsplash.com/photo-1470071459604-3b5ec3a7fe05?w=1200&q=80" alt="Dramatic forest landscape" loading="lazy">
+</div>
+
+<!-- SERVICES -->
+<div class="services-row" id="services">
+  <div class="service-item">
+    <h3>Weddings</h3>
+    <p>Full-day coverage, second shooter, engagement session, and a curated gallery.</p>
+    <div class="price">From $4,500</div>
+  </div>
+  <div class="service-item">
+    <h3>Portraits</h3>
+    <p>Studio or on-location. Individual, couples, or family sessions.</p>
+    <div class="price">From $800</div>
+  </div>
+  <div class="service-item">
+    <h3>Editorial</h3>
+    <p>Brand campaigns, magazine shoots, and creative direction.</p>
+    <div class="price">From $3,000</div>
+  </div>
+  <div class="service-item">
+    <h3>Fine Art Prints</h3>
+    <p>Museum-quality archival prints available in limited editions.</p>
+    <div class="price">From $250</div>
+  </div>
+</div>
+
+<!-- CONTACT -->
+<div class="contact-section" id="contact">
+  <h2>Get in Touch</h2>
+  <div class="line"></div>
+  <p class="subtitle">I would love to hear about your project</p>
+  <div class="form-row">
+    <div class="form-group"><label>Name</label><input type="text" placeholder="Your name"></div>
+    <div class="form-group"><label>Email</label><input type="email" placeholder="your@email.com"></div>
+  </div>
+  <div class="form-group"><label>Service</label>
+    <select><option>Select a service...</option><option>Weddings</option><option>Portraits</option><option>Editorial</option><option>Fine Art</option></select>
+  </div>
+  <div class="form-group"><label>Message</label><textarea placeholder="Tell me about your vision..."></textarea></div>
+  <button class="submit-btn">Send Inquiry</button>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="logo">Lens</div>
+    <ul class="footer-links">
+      <li><a href="#">Instagram</a></li>
+      <li><a href="#">Behance</a></li>
+      <li><a href="#">500px</a></li>
+    </ul>
+    <div class="footer-copy">&copy; 2026 Lens Photography. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var nav = document.getElementById('main-nav');
+  var heroHeight = document.querySelector('.hero-image').offsetHeight;
+
+  // Show nav after scrolling past the hero image
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > heroHeight * 0.7) {
+      nav.classList.add('visible');
+    } else {
+      nav.classList.remove('visible');
+    }
+  });
+});
+</script>
+</body>
+</html>

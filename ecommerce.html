@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Luxe - Premium Store</title>
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{--purple:#7c3aed;--purple-light:#8b5cf6;--purple-dark:#6d28d9;--plum:#2e1065;--bg:#0f0b15;--bg2:#1a1425;--bg3:#231d30;--text:#f0ecf4;--text-muted:#a78bba;--gold:#f0c674;--border:rgba(124,58,237,.2)}
+body{font-family:'Segoe UI',system-ui,-apple-system,sans-serif;background:var(--bg);color:var(--text);line-height:1.6}
+a{text-decoration:none;color:inherit}
+
+/* STICKY CATEGORY FILTER BAR at top (replaces hero) */
+.filter-bar{position:sticky;top:0;z-index:100;background:rgba(15,11,21,.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+.filter-inner{max-width:1400px;margin:0 auto;padding:0 32px;display:flex;align-items:center;height:64px;gap:24px}
+.filter-bar .logo{font-size:1.4rem;font-weight:300;letter-spacing:6px;text-transform:uppercase;flex-shrink:0}
+.filter-bar .logo span{color:var(--purple-light)}
+.filter-categories{display:flex;gap:4px;flex:1;overflow-x:auto;-webkit-overflow-scrolling:touch}
+.filter-categories::-webkit-scrollbar{display:none}
+.filter-cat{padding:8px 20px;border-radius:20px;font-size:.82rem;font-weight:500;color:var(--text-muted);cursor:pointer;transition:all .3s;white-space:nowrap;border:1px solid transparent}
+.filter-cat:hover{color:var(--text);border-color:var(--border)}
+.filter-cat.active{background:var(--purple);color:#fff;border-color:var(--purple)}
+.filter-right{display:flex;align-items:center;gap:18px;flex-shrink:0}
+.cart-icon{position:relative;cursor:pointer;font-size:1.2rem}
+.cart-badge{position:absolute;top:-8px;right:-10px;background:var(--purple);color:#fff;font-size:.6rem;width:17px;height:17px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-weight:700}
+.search-icon{cursor:pointer;font-size:1.1rem;color:var(--text-muted);transition:color .3s}
+.search-icon:hover{color:var(--text)}
+
+/* PRODUCT GRID - immediate, no hero */
+.product-section{max-width:1400px;margin:0 auto;padding:32px}
+.product-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:24px}
+.product-header h1{font-size:1.6rem;font-weight:300;letter-spacing:1px}
+.product-header h1 span{color:var(--purple-light);font-weight:600}
+.product-count{color:var(--text-muted);font-size:.85rem}
+
+.product-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:20px}
+
+.product-card{background:var(--bg2);border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.04);transition:transform .3s,border-color .3s;position:relative}
+.product-card:hover{transform:translateY(-4px);border-color:var(--purple)}
+.product-img{height:320px;overflow:hidden;background:linear-gradient(135deg,#7c3aed,#4c1d95);position:relative}
+.product-img img{width:100%;height:100%;object-fit:cover;transition:transform .5s}
+.product-card:hover .product-img img{transform:scale(1.06)}
+.product-tag{position:absolute;top:14px;left:14px;background:var(--gold);color:var(--bg);padding:4px 12px;border-radius:16px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.trending-badge{position:absolute;top:14px;left:14px;background:linear-gradient(135deg,#ec4899,#8b5cf6);color:#fff;padding:4px 12px;border-radius:16px;font-size:.68rem;font-weight:700;text-transform:uppercase;letter-spacing:1px}
+.product-tag + .trending-badge,.trending-badge + .product-tag{top:42px}
+.wishlist-btn{position:absolute;top:14px;right:14px;width:36px;height:36px;border-radius:50%;background:rgba(15,11,21,.6);backdrop-filter:blur(4px);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:1rem;transition:background .3s}
+.wishlist-btn:hover{background:var(--purple)}
+/* Quick-view hover overlay */
+.quick-view{position:absolute;inset:0;background:rgba(15,11,21,.75);display:flex;align-items:center;justify-content:center;opacity:0;transition:opacity .3s;backdrop-filter:blur(2px)}
+.product-card:hover .quick-view{opacity:1}
+.quick-view-btn{background:var(--purple);color:#fff;border:none;padding:12px 28px;border-radius:8px;font-size:.82rem;font-weight:600;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:background .3s}
+.quick-view-btn:hover{background:var(--purple-light)}
+.product-info{padding:18px 20px}
+.product-info h3{font-size:.95rem;font-weight:400;margin-bottom:6px}
+.star-rating{color:var(--gold);font-size:.8rem;margin-bottom:8px;letter-spacing:1px}
+.star-rating .review-count{color:var(--text-muted);font-size:.72rem;margin-left:6px}
+.product-bottom{display:flex;justify-content:space-between;align-items:center}
+.product-price{font-size:1.15rem;font-weight:700;color:var(--purple-light)}
+.add-cart{background:var(--bg3);color:var(--text-muted);border:none;padding:8px 18px;border-radius:8px;font-size:.78rem;cursor:pointer;transition:all .3s;font-weight:600}
+.add-cart:hover{background:var(--purple);color:#fff}
+
+/* SOCIAL PROOF / INSTAGRAM SECTION */
+.social-section{max-width:1400px;margin:40px auto;padding:0 32px}
+.social-header{text-align:center;margin-bottom:24px}
+.social-header h2{font-size:1.4rem;font-weight:300;letter-spacing:1px;margin-bottom:4px}
+.social-header h2 span{color:var(--purple-light);font-weight:600}
+.social-header p{color:var(--text-muted);font-size:.85rem}
+.social-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}
+.social-item{position:relative;border-radius:12px;overflow:hidden;aspect-ratio:1;cursor:pointer}
+.social-item img{width:100%;height:100%;object-fit:cover;transition:transform .5s,filter .3s;filter:brightness(.9)}
+.social-item:hover img{transform:scale(1.06);filter:brightness(1)}
+.social-item::after{content:'@luxe';position:absolute;bottom:12px;left:12px;color:#fff;font-size:.72rem;font-weight:600;text-shadow:0 1px 4px rgba(0,0,0,.6);opacity:0;transition:opacity .3s}
+.social-item:hover::after{opacity:1}
+
+/* NEWSLETTER POPUP BANNER */
+.newsletter-banner{max-width:1400px;margin:40px auto;padding:0 32px}
+.banner-inner{background:linear-gradient(135deg,var(--purple),var(--plum));border-radius:20px;padding:48px;text-align:center;position:relative;overflow:hidden}
+.banner-inner::before{content:'';position:absolute;top:-50%;right:-20%;width:400px;height:400px;border-radius:50%;background:rgba(139,92,246,.3);pointer-events:none}
+.banner-inner h2{font-size:1.8rem;font-weight:700;margin-bottom:8px;position:relative}
+.banner-inner p{color:rgba(255,255,255,.6);margin-bottom:24px;position:relative}
+.banner-form{display:flex;gap:0;justify-content:center;border-radius:10px;overflow:hidden;max-width:460px;margin:0 auto;position:relative}
+.banner-form input{padding:16px 20px;border:none;background:rgba(255,255,255,.1);color:#fff;font-size:.9rem;outline:none;flex:1}
+.banner-form input::placeholder{color:rgba(255,255,255,.4)}
+.banner-form button{background:var(--gold);color:var(--bg);border:none;padding:16px 32px;font-weight:700;font-size:.82rem;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:background .3s;white-space:nowrap}
+.banner-form button:hover{background:#f5d898}
+
+/* QUICK VIEW BANNER */
+.promo-banner{max-width:1400px;margin:16px auto 8px;padding:0 32px}
+.promo-inner{background:linear-gradient(135deg,var(--purple-dark),var(--plum));border-radius:16px;padding:40px 48px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:20px}
+.promo-inner h2{font-size:1.4rem;font-weight:300;letter-spacing:1px}
+.promo-inner h2 span{font-weight:600;background:linear-gradient(135deg,var(--purple-light),var(--gold));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+.promo-inner p{color:rgba(255,255,255,.6);font-size:.9rem;max-width:400px}
+.btn-purple{background:var(--purple);color:#fff;padding:14px 36px;border-radius:8px;font-weight:600;font-size:.85rem;letter-spacing:1px;transition:all .3s;display:inline-block}
+.btn-purple:hover{background:var(--purple-light);transform:translateY(-2px)}
+
+/* (newsletter styles moved to banner section above) */
+
+/* FOOTER */
+footer{background:var(--bg2);padding:48px 32px 24px;margin-top:40px;border-top:1px solid var(--border)}
+.footer-inner{max-width:1400px;margin:0 auto}
+.footer-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:36px;margin-bottom:36px}
+.footer-col h4{color:var(--purple-light);margin-bottom:14px;font-size:.78rem;text-transform:uppercase;letter-spacing:2px}
+.footer-col p,.footer-col a{color:var(--text-muted);font-size:.88rem;display:block;margin-bottom:7px;transition:color .3s}
+.footer-col a:hover{color:var(--purple-light)}
+.footer-bottom{text-align:center;padding-top:24px;border-top:1px solid rgba(255,255,255,.05);color:var(--text-muted);font-size:.78rem}
+
+.fade-in{opacity:0;transform:translateY(20px);transition:opacity 0.5s ease,transform 0.5s ease}
+.fade-in.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:768px){
+  .filter-inner{gap:12px}
+  .filter-categories{display:none}
+  .product-grid{grid-template-columns:1fr 1fr}
+  .product-img{height:220px}
+  .promo-inner{flex-direction:column;text-align:center}
+  .social-grid{grid-template-columns:1fr 1fr}
+  .banner-form{flex-direction:column}
+  .banner-form input{border-radius:8px 8px 0 0}
+  .banner-form button{border-radius:0 0 8px 8px}
+}
+@media(max-width:500px){
+  .product-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- STICKY CATEGORY FILTER BAR -->
+<div class="filter-bar">
+  <div class="filter-inner">
+    <div class="logo"><span>L</span>uxe</div>
+    <div class="filter-categories">
+      <div class="filter-cat active">All</div>
+      <div class="filter-cat">Accessories</div>
+      <div class="filter-cat">Watches</div>
+      <div class="filter-cat">Leather Goods</div>
+      <div class="filter-cat">Home</div>
+      <div class="filter-cat">Fragrance</div>
+      <div class="filter-cat">Gifts</div>
+    </div>
+    <div class="filter-right">
+      <div class="search-icon">&#128269;</div>
+      <div class="cart-icon">&#128722;<span class="cart-badge">3</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- PRODUCT GRID - IMMEDIATE -->
+<div class="product-section">
+  <div class="product-header">
+    <h1>The <span>Collection</span></h1>
+    <div class="product-count">Showing 8 products</div>
+  </div>
+  <div class="product-grid">
+    <div class="product-card fade-in">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" alt="Premium watch" loading="lazy"><span class="product-tag">Limited Edition</span><span class="trending-badge">Trending</span><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Obsidian Timepiece</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9733;<span class="review-count">(128)</span></div><div class="product-bottom"><span class="product-price">$2,450</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=400&q=80" alt="Premium headphones" loading="lazy"><span class="product-tag">Bestseller</span><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Noir Leather Tote</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9734;<span class="review-count">(84)</span></div><div class="product-bottom"><span class="product-price">$890</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=400&q=80" alt="Designer sunglasses" loading="lazy"><span class="trending-badge">Trending</span><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Cashmere Scarf</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9733;<span class="review-count">(62)</span></div><div class="product-bottom"><span class="product-price">$320</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80" alt="Vintage camera" loading="lazy"><span class="product-tag">New</span><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Silk Tie Set</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9734;<span class="review-count">(37)</span></div><div class="product-bottom"><span class="product-price">$185</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img" style="background:linear-gradient(135deg,#7c3aed,#2e1065)"><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Crystal Decanter</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9733;<span class="review-count">(19)</span></div><div class="product-bottom"><span class="product-price">$540</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img" style="background:linear-gradient(135deg,#4c1d95,#a78bba)"><span class="trending-badge">Trending</span><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Leather Wallet</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9734;<span class="review-count">(53)</span></div><div class="product-bottom"><span class="product-price">$275</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img" style="background:linear-gradient(135deg,#6d28d9,#0f0b15)"><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Gold Cufflinks</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9733;<span class="review-count">(41)</span></div><div class="product-bottom"><span class="product-price">$420</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+    <div class="product-card fade-in">
+      <div class="product-img" style="background:linear-gradient(135deg,#8b5cf6,#2e1065)"><span class="product-tag">Sale</span><div class="wishlist-btn">&#9825;</div><div class="quick-view"><button class="quick-view-btn">Quick View</button></div></div>
+      <div class="product-info"><h3>Cologne Signature</h3><div class="star-rating">&#9733;&#9733;&#9733;&#9733;&#9734;<span class="review-count">(96)</span></div><div class="product-bottom"><span class="product-price">$195</span><button class="add-cart">Add to Cart</button></div></div>
+    </div>
+  </div>
+</div>
+
+<!-- PROMO BANNER -->
+<div class="promo-banner">
+  <div class="promo-inner">
+    <div>
+      <h2>Join the <span>Inner Circle</span></h2>
+      <p>Members get early access to new releases, private sales, and curated content.</p>
+    </div>
+    <a href="#" class="btn-purple">Become a Member</a>
+  </div>
+</div>
+
+<!-- SOCIAL PROOF / INSTAGRAM -->
+<div class="social-section">
+  <div class="social-header">
+    <h2>As Seen on <span>Social</span></h2>
+    <p>Follow @luxe for styling inspiration and exclusive drops</p>
+  </div>
+  <div class="social-grid">
+    <div class="social-item"><img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?w=400&q=80" alt="Shopping lifestyle" loading="lazy"></div>
+    <div class="social-item"><img src="https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=400&q=80" alt="Store interior" loading="lazy"></div>
+    <div class="social-item"><img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80" alt="Product lifestyle" loading="lazy"></div>
+    <div class="social-item"><img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=400&q=80" alt="Product in wild" loading="lazy"></div>
+  </div>
+</div>
+
+<!-- NEWSLETTER BANNER -->
+<div class="newsletter-banner">
+  <div class="banner-inner">
+    <h2>Get 15% Off Your First Order</h2>
+    <p>Join the Luxe list for early access, exclusive deals, and curated style picks.</p>
+    <div class="banner-form">
+      <input type="email" placeholder="Enter your email address">
+      <button>Subscribe</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-inner">
+    <div class="footer-grid">
+      <div class="footer-col"><h4>Luxe</h4><p>Curated premium goods since 2018. Every piece tells a story of craft.</p></div>
+      <div class="footer-col"><h4>Shop</h4><a href="#">New Arrivals</a><a href="#">Bestsellers</a><a href="#">Sale</a><a href="#">Gift Cards</a></div>
+      <div class="footer-col"><h4>Support</h4><a href="#">Shipping & Returns</a><a href="#">FAQ</a><a href="#">Size Guide</a><a href="#">Contact</a></div>
+      <div class="footer-col"><h4>Contact</h4><p>support@shopluxe.com</p><p>(555) 456-7890</p><p>Mon-Fri 9am-6pm EST</p></div>
+    </div>
+    <div class="footer-bottom">&copy; 2026 Luxe. All rights reserved.</div>
+  </div>
+</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.08 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+
+  // Category filter toggle
+  document.querySelectorAll('.filter-cat').forEach(function(btn) {
+    btn.addEventListener('click', function() {
+      document.querySelectorAll('.filter-cat').forEach(function(b) { b.classList.remove('active'); });
+      btn.classList.add('active');
+    });
+  });
+});
+</script>
+</body>
+</html>

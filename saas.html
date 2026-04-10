@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Flux — Workflow Automation</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #09090b; color: #e4e4e7; font-family: 'Inter', system-ui, sans-serif; }
+
+  nav { padding: 16px 40px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #18181b; }
+  nav .logo { font-size: 20px; font-weight: 800; color: #6366f1; }
+  nav ul { list-style: none; display: flex; gap: 28px; align-items: center; }
+  nav ul a { color: #71717a; text-decoration: none; font-size: 14px; transition: color 0.2s; }
+  nav ul a:hover { color: #e4e4e7; }
+  .nav-cta { background: #6366f1; color: #fff !important; padding: 8px 18px; border-radius: 6px; font-weight: 600; }
+
+  /* Hero */
+  .hero { padding: 120px 40px 80px; text-align: center; max-width: 800px; margin: 0 auto; position: relative; overflow: hidden; }
+  .hero-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; background: linear-gradient(135deg, #09090b 0%, #0f0f23 30%, #1a1040 60%, #09090b 100%); z-index: -2; }
+  .floating-shapes { position: fixed; top: 0; left: 0; width: 100%; height: 100vh; z-index: -1; pointer-events: none; overflow: hidden; }
+  .shape { position: absolute; border: 1px solid rgba(99,102,241,0.15); border-radius: 8px; animation: floatShape 15s ease-in-out infinite; }
+  .shape:nth-child(1) { width: 60px; height: 60px; top: 15%; left: 10%; animation-delay: 0s; animation-duration: 18s; }
+  .shape:nth-child(2) { width: 40px; height: 40px; top: 60%; left: 80%; animation-delay: -3s; animation-duration: 14s; border-radius: 50%; }
+  .shape:nth-child(3) { width: 80px; height: 80px; top: 30%; left: 70%; animation-delay: -6s; animation-duration: 20s; transform: rotate(45deg); }
+  .shape:nth-child(4) { width: 30px; height: 30px; top: 75%; left: 20%; animation-delay: -9s; animation-duration: 16s; border-radius: 50%; }
+  .shape:nth-child(5) { width: 50px; height: 50px; top: 45%; left: 45%; animation-delay: -4s; animation-duration: 22s; }
+  .dot { position: absolute; width: 3px; height: 3px; background: rgba(99,102,241,0.3); border-radius: 50%; animation: floatDot 10s ease-in-out infinite; }
+  .dot:nth-child(6) { top: 20%; left: 30%; animation-delay: 0s; }
+  .dot:nth-child(7) { top: 50%; left: 60%; animation-delay: -2s; }
+  .dot:nth-child(8) { top: 70%; left: 15%; animation-delay: -4s; }
+  .dot:nth-child(9) { top: 35%; left: 85%; animation-delay: -6s; }
+  .dot:nth-child(10) { top: 80%; left: 50%; animation-delay: -1s; }
+  .dot:nth-child(11) { top: 10%; left: 75%; animation-delay: -3s; }
+  .dot:nth-child(12) { top: 55%; left: 25%; animation-delay: -5s; }
+  .dot:nth-child(13) { top: 90%; left: 70%; animation-delay: -7s; }
+  @keyframes floatShape { 0%, 100% { transform: translateY(0) rotate(0deg); opacity: 0.4; } 50% { transform: translateY(-30px) rotate(180deg); opacity: 0.8; } }
+  @keyframes floatDot { 0%, 100% { transform: translateY(0) translateX(0); opacity: 0.3; } 33% { transform: translateY(-15px) translateX(10px); opacity: 0.7; } 66% { transform: translateY(10px) translateX(-8px); opacity: 0.5; } }
+  .badge { display: inline-block; background: #1e1b4b; color: #818cf8; padding: 4px 14px; border-radius: 20px; font-size: 12px; font-weight: 600; margin-bottom: 20px; }
+  .hero h1 { font-size: 56px; font-weight: 800; line-height: 1.1; letter-spacing: -2px; margin-bottom: 20px; }
+  .hero h1 span { background: linear-gradient(135deg, #6366f1, #8b5cf6); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+  .hero p { color: #71717a; font-size: 18px; line-height: 1.7; max-width: 560px; margin: 0 auto 32px; }
+  .hero-buttons { display: flex; gap: 12px; justify-content: center; }
+  .btn-primary { background: #6366f1; color: #fff; padding: 14px 28px; border-radius: 8px; font-weight: 700; text-decoration: none; font-size: 15px; }
+  .btn-secondary { background: #18181b; color: #e4e4e7; padding: 14px 28px; border-radius: 8px; font-weight: 600; text-decoration: none; font-size: 15px; border: 1px solid #27272a; }
+
+  /* Social proof */
+  .social-proof { text-align: center; padding: 40px; color: #52525b; font-size: 13px; }
+  .logos { display: flex; gap: 40px; justify-content: center; align-items: center; margin-top: 12px; opacity: 0.4; font-size: 18px; font-weight: 700; letter-spacing: 2px; }
+
+  /* Features */
+  .features { padding: 100px 40px; max-width: 1100px; margin: 0 auto; }
+  .features-header { text-align: center; margin-bottom: 60px; }
+  .features-header h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; }
+  .features-header p { color: #71717a; max-width: 500px; margin: 0 auto; }
+  .features-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+  .feature-card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 28px; transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .feature-card:hover { transform: translateY(-6px) scale(1.02); box-shadow: 0 16px 40px rgba(99,102,241,0.15); }
+
+  .price-card { transition: transform 0.3s ease, box-shadow 0.3s ease; }
+  .price-card:hover { transform: translateY(-6px); box-shadow: 0 16px 40px rgba(99,102,241,0.2); }
+
+  /* Fade-in animation */
+  .fade-in { opacity: 0; transform: translateY(30px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .fade-in.visible { opacity: 1; transform: translateY(0); }
+  .feature-icon { width: 40px; height: 40px; background: #1e1b4b; border-radius: 10px; display: flex; align-items: center; justify-content: center; margin-bottom: 16px; font-size: 20px; }
+  .feature-card h3 { font-size: 16px; font-weight: 700; margin-bottom: 8px; }
+  .feature-card p { color: #71717a; font-size: 14px; line-height: 1.6; }
+
+  /* Pricing */
+  .pricing { padding: 100px 40px; max-width: 1000px; margin: 0 auto; text-align: center; }
+  .pricing h2 { font-size: 36px; font-weight: 800; margin-bottom: 40px; }
+  .pricing-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  .price-card { background: #18181b; border: 1px solid #27272a; border-radius: 12px; padding: 32px; text-align: left; }
+  .price-card.popular { border-color: #6366f1; position: relative; }
+  .popular-badge { position: absolute; top: -10px; left: 50%; transform: translateX(-50%); background: #6366f1; color: #fff; padding: 2px 12px; border-radius: 10px; font-size: 11px; font-weight: 700; }
+  .price-card h3 { font-size: 18px; margin-bottom: 8px; }
+  .price-card .price { font-size: 40px; font-weight: 800; margin-bottom: 4px; }
+  .price-card .price span { font-size: 16px; color: #71717a; font-weight: 400; }
+  .price-card .desc { color: #71717a; font-size: 13px; margin-bottom: 20px; }
+  .price-card ul { list-style: none; margin-bottom: 24px; }
+  .price-card li { padding: 6px 0; font-size: 14px; color: #a1a1aa; }
+  .price-card li::before { content: "✓ "; color: #6366f1; font-weight: 700; }
+  .price-btn { display: block; text-align: center; padding: 12px; border-radius: 8px; text-decoration: none; font-weight: 700; font-size: 14px; }
+  .price-btn-outline { border: 1px solid #27272a; color: #e4e4e7; }
+  .price-btn-fill { background: #6366f1; color: #fff; }
+
+  /* CTA */
+  .final-cta { text-align: center; padding: 100px 40px; background: linear-gradient(180deg, #09090b, #0f0f23); }
+  .final-cta h2 { font-size: 40px; font-weight: 800; margin-bottom: 16px; }
+  .final-cta p { color: #71717a; margin-bottom: 28px; }
+
+  footer { text-align: center; padding: 30px; color: #3f3f46; font-size: 12px; border-top: 1px solid #18181b; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .features-grid, .pricing-grid { grid-template-columns: 1fr; }
+    nav ul { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="logo">flux</div>
+  <ul>
+    <li><a href="#features">Features</a></li>
+    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="#">Docs</a></li>
+    <li><a href="#" class="nav-cta">Start Free</a></li>
+  </ul>
+</nav>
+
+<div class="hero-bg"></div>
+<div class="floating-shapes">
+  <div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div><div class="shape"></div>
+  <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+</div>
+<div class="hero">
+  <span class="badge">Now in public beta</span>
+  <h1>Automate your<br><span>entire workflow</span></h1>
+  <p>Flux connects your tools, automates repetitive tasks, and gives your team back 10 hours a week. No code required.</p>
+  <div class="hero-buttons">
+    <a class="btn-primary" href="#">Start Free Trial</a>
+    <a class="btn-secondary" href="#">Watch Demo</a>
+  </div>
+</div>
+
+<div class="social-proof">
+  Trusted by 2,000+ teams worldwide
+  <div class="logos">
+    <span>STRIPE</span><span>VERCEL</span><span>LINEAR</span><span>NOTION</span><span>FIGMA</span>
+  </div>
+</div>
+
+<div class="features fade-in" id="features">
+  <div class="features-header">
+    <h2>Everything you need</h2>
+    <p>Built for modern teams that move fast and hate busywork.</p>
+  </div>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feature-icon">⚡</div>
+      <h3>Instant Automations</h3>
+      <p>Build workflows in minutes with our visual drag-and-drop builder. No engineering team needed.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔗</div>
+      <h3>200+ Integrations</h3>
+      <p>Connect Slack, GitHub, Jira, Notion, Google Workspace, and more out of the box.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🧠</div>
+      <h3>AI-Powered Logic</h3>
+      <p>Smart routing, natural language conditions, and predictive triggers that learn from your patterns.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">📊</div>
+      <h3>Real-Time Analytics</h3>
+      <p>Track every automation run. See what's working, what's failing, and where time is saved.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🔒</div>
+      <h3>Enterprise Security</h3>
+      <p>SOC 2 Type II certified. End-to-end encryption. Role-based access controls.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feature-icon">🚀</div>
+      <h3>99.9% Uptime</h3>
+      <p>Globally distributed infrastructure. Your automations run even when everything else doesn't.</p>
+    </div>
+  </div>
+</div>
+
+<div class="pricing fade-in" id="pricing">
+  <h2>Simple, transparent pricing</h2>
+  <div class="pricing-grid">
+    <div class="price-card">
+      <h3>Starter</h3>
+      <div class="price">$0<span>/mo</span></div>
+      <div class="desc">For individuals getting started</div>
+      <ul>
+        <li>100 automations/month</li>
+        <li>5 integrations</li>
+        <li>Community support</li>
+        <li>Basic analytics</li>
+      </ul>
+      <a class="price-btn price-btn-outline" href="#">Get Started</a>
+    </div>
+    <div class="price-card popular">
+      <span class="popular-badge">Most Popular</span>
+      <h3>Pro</h3>
+      <div class="price">$29<span>/mo</span></div>
+      <div class="desc">For growing teams</div>
+      <ul>
+        <li>Unlimited automations</li>
+        <li>50+ integrations</li>
+        <li>Priority support</li>
+        <li>Advanced analytics</li>
+        <li>Custom webhooks</li>
+      </ul>
+      <a class="price-btn price-btn-fill" href="#">Start Free Trial</a>
+    </div>
+    <div class="price-card">
+      <h3>Enterprise</h3>
+      <div class="price">Custom</div>
+      <div class="desc">For large organizations</div>
+      <ul>
+        <li>Everything in Pro</li>
+        <li>SSO & SAML</li>
+        <li>Dedicated account manager</li>
+        <li>Custom integrations</li>
+        <li>SLA guarantee</li>
+      </ul>
+      <a class="price-btn price-btn-outline" href="#">Contact Sales</a>
+    </div>
+  </div>
+</div>
+
+<div class="final-cta">
+  <h2>Ready to automate?</h2>
+  <p>Join 2,000+ teams saving 10+ hours every week.</p>
+  <a class="btn-primary" href="#">Start Your Free Trial</a>
+</div>
+
+<footer>&copy; 2026 Flux, Inc. All rights reserved.</footer>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+  const observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15 });
+  document.querySelectorAll('.fade-in').forEach(function(el) { observer.observe(el); });
+});
+</script>
+</body>
+</html>

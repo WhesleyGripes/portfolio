@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Josh — Web Design Portfolio</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { background: #faf8f5; color: #2d2a26; font-family: 'Inter', system-ui, -apple-system, sans-serif; }
+
+  /* Hero */
+  .hero {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 60px 20px;
+    background: linear-gradient(135deg, #faf8f5 0%, #f0ebe3 50%, #faf8f5 100%);
+  }
+  .hero h1 { font-size: 52px; font-weight: 800; letter-spacing: -2px; margin-bottom: 12px; color: #1a1a1a; }
+  .hero h1 span { color: #c47a3a; }
+  .hero p { color: #6b6560; font-size: 18px; max-width: 500px; line-height: 1.6; margin-bottom: 30px; }
+  .hero-stats { display: flex; gap: 40px; margin-top: 20px; }
+  .stat-item { text-align: center; }
+  .stat-num { font-size: 32px; font-weight: 800; color: #c47a3a; }
+  .stat-label { font-size: 12px; color: #8a8480; text-transform: uppercase; letter-spacing: 1px; }
+
+  /* Portfolio grid */
+  .section { padding: 80px 20px; max-width: 1200px; margin: 0 auto; }
+  .section-title { font-size: 14px; color: #c47a3a; text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+  .section h2 { font-size: 36px; font-weight: 800; margin-bottom: 40px; color: #1a1a1a; }
+
+  .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(350px, 1fr)); gap: 24px; }
+
+  .card {
+    background: #fff;
+    border: 1px solid #e8e2da;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    display: block;
+  }
+  .card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.08); }
+
+  .card-preview {
+    height: 220px;
+    position: relative;
+    overflow: hidden;
+  }
+  .card-preview img, .card-preview .preview-placeholder {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .preview-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    font-weight: 800;
+    letter-spacing: -2px;
+  }
+
+  .card-body { padding: 20px; }
+  .card-body h3 { font-size: 18px; font-weight: 700; margin-bottom: 6px; color: #1a1a1a; }
+  .card-body p { font-size: 13px; color: #6b6560; line-height: 1.5; margin-bottom: 12px; }
+  .card-tags { display: flex; gap: 6px; flex-wrap: wrap; }
+  .tag { padding: 3px 10px; border-radius: 20px; font-size: 11px; background: #fdf3e7; color: #c47a3a; border: 1px solid #f0d9c0; }
+
+  /* Industry colors for preview placeholders */
+  .preview-restaurant { background: linear-gradient(135deg, #dc2626, #991b1b); color: rgba(255,255,255,0.15); }
+  .preview-saas { background: linear-gradient(135deg, #6366f1, #4f46e5); color: rgba(255,255,255,0.15); }
+  .preview-realestate { background: linear-gradient(135deg, #059669, #047857); color: rgba(255,255,255,0.15); }
+  .preview-medical { background: linear-gradient(135deg, #0891b2, #0e7490); color: rgba(255,255,255,0.15); }
+  .preview-law { background: linear-gradient(135deg, #78716c, #57534e); color: rgba(255,255,255,0.15); }
+  .preview-fitness { background: linear-gradient(135deg, #ea580c, #c2410c); color: rgba(255,255,255,0.15); }
+  .preview-ecommerce { background: linear-gradient(135deg, #7c3aed, #6d28d9); color: rgba(255,255,255,0.15); }
+  .preview-portfolio { background: linear-gradient(135deg, #0a0a0a, #1a1a2e); color: rgba(255,255,255,0.15); border-bottom: 1px solid #222; }
+  .preview-nonprofit { background: linear-gradient(135deg, #2563eb, #1d4ed8); color: rgba(255,255,255,0.15); }
+  .preview-agency { background: linear-gradient(135deg, #f59e0b, #d97706); color: rgba(255,255,255,0.15); }
+
+  /* CTA */
+  .cta {
+    text-align: center;
+    padding: 80px 20px;
+    background: linear-gradient(180deg, #f0ebe3, #e8e0d4);
+  }
+  .cta h2 { font-size: 36px; font-weight: 800; margin-bottom: 12px; color: #1a1a1a; }
+  .cta p { color: #6b6560; margin-bottom: 24px; }
+  .cta-btn {
+    display: inline-block;
+    background: #c47a3a;
+    color: #fff;
+    padding: 14px 32px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 16px;
+    text-decoration: none;
+    transition: background 0.2s;
+  }
+  .cta-btn:hover { background: #a86830; }
+
+  /* Footer */
+  footer { text-align: center; padding: 30px; color: #8a8480; font-size: 12px; border-top: 1px solid #e8e2da; }
+
+  @media (max-width: 768px) {
+    .hero h1 { font-size: 32px; }
+    .grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>I design websites<br>that <span>convert</span>.</h1>
+  <p>Clean, modern, responsive designs for businesses that want to stand out. Every pixel has a purpose.</p>
+  <div class="hero-stats">
+    <div class="stat-item"><div class="stat-num">11</div><div class="stat-label">Industries</div></div>
+    <div class="stat-item"><div class="stat-num">100%</div><div class="stat-label">Responsive</div></div>
+    <div class="stat-item"><div class="stat-num">48-72hr</div><div class="stat-label">Turnaround</div></div>
+  </div>
+</div>
+
+<div class="section">
+  <div class="section-title">Portfolio</div>
+  <h2>Recent Work</h2>
+
+  <div class="grid">
+    <a class="card" href="jiujitsu.html">
+      <div class="card-preview"><div class="preview-placeholder" style="background:linear-gradient(135deg,#0a0a0a,#1a1a00);color:#c8ff00">10P</div></div>
+      <div class="card-body">
+        <h3>10th Planet — Jiu-Jitsu Gym</h3>
+        <p>Reimagined 10th Planet Greenville. Aggressive design with schedule, instructors, testimonials, and free trial CTA.</p>
+        <div class="card-tags"><span class="tag">Martial Arts</span><span class="tag">Schedule</span><span class="tag">Redesign</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="restaurant.html">
+      <div class="card-preview"><div class="preview-placeholder preview-restaurant">EMBER</div></div>
+      <div class="card-body">
+        <h3>Ember — Restaurant & Bar</h3>
+        <p>Upscale dining experience with online reservations, menu showcase, and ambiance photography.</p>
+        <div class="card-tags"><span class="tag">Restaurant</span><span class="tag">Responsive</span><span class="tag">Reservations</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="saas.html">
+      <div class="card-preview"><div class="preview-placeholder preview-saas">FLUX</div></div>
+      <div class="card-body">
+        <h3>Flux — SaaS Landing Page</h3>
+        <p>High-converting product page for a workflow automation tool. Pricing, features, testimonials.</p>
+        <div class="card-tags"><span class="tag">SaaS</span><span class="tag">Landing Page</span><span class="tag">Conversion</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="realestate.html">
+      <div class="card-preview"><div class="preview-placeholder preview-realestate">HAVEN</div></div>
+      <div class="card-body">
+        <h3>Haven — Real Estate Agency</h3>
+        <p>Property listings, agent profiles, neighborhood guides, and mortgage calculator.</p>
+        <div class="card-tags"><span class="tag">Real Estate</span><span class="tag">Listings</span><span class="tag">Search</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="medical.html">
+      <div class="card-preview"><div class="preview-placeholder preview-medical">VITA</div></div>
+      <div class="card-body">
+        <h3>Vita — Medical Practice</h3>
+        <p>Clean, trustworthy design for a family clinic. Online booking, services, team bios.</p>
+        <div class="card-tags"><span class="tag">Medical</span><span class="tag">Booking</span><span class="tag">Trust</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="law.html">
+      <div class="card-preview"><div class="preview-placeholder preview-law">BRIGGS</div></div>
+      <div class="card-body">
+        <h3>Briggs & Cole — Law Firm</h3>
+        <p>Professional, authoritative design. Practice areas, attorney profiles, consultation booking.</p>
+        <div class="card-tags"><span class="tag">Legal</span><span class="tag">Professional</span><span class="tag">Consultation</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="fitness.html">
+      <div class="card-preview"><div class="preview-placeholder preview-fitness">IRON</div></div>
+      <div class="card-body">
+        <h3>Iron Athletics — Gym & Fitness</h3>
+        <p>Bold, energetic design. Class schedules, membership plans, trainer profiles.</p>
+        <div class="card-tags"><span class="tag">Fitness</span><span class="tag">Membership</span><span class="tag">Schedule</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="ecommerce.html">
+      <div class="card-preview"><div class="preview-placeholder preview-ecommerce">LUXE</div></div>
+      <div class="card-body">
+        <h3>Luxe — E-Commerce Store</h3>
+        <p>Premium product showcase with cart, filtering, and checkout flow.</p>
+        <div class="card-tags"><span class="tag">E-Commerce</span><span class="tag">Shopify</span><span class="tag">Product</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="photographer.html">
+      <div class="card-preview"><div class="preview-placeholder preview-portfolio">LENS</div></div>
+      <div class="card-body">
+        <h3>Lens — Photographer Portfolio</h3>
+        <p>Minimal, image-focused portfolio with galleries, about page, and contact form.</p>
+        <div class="card-tags"><span class="tag">Portfolio</span><span class="tag">Gallery</span><span class="tag">Minimal</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="nonprofit.html">
+      <div class="card-preview"><div class="preview-placeholder preview-nonprofit">RISE</div></div>
+      <div class="card-body">
+        <h3>Rise — Non-Profit / Charity</h3>
+        <p>Storytelling-driven design with donation integration, impact metrics, and volunteer signup.</p>
+        <div class="card-tags"><span class="tag">Non-Profit</span><span class="tag">Donations</span><span class="tag">Impact</span></div>
+      </div>
+    </a>
+
+    <a class="card" href="agency.html">
+      <div class="card-preview"><div class="preview-placeholder preview-agency">BOLD</div></div>
+      <div class="card-body">
+        <h3>Bold — Creative Agency</h3>
+        <p>Dynamic agency site with case studies, services, team page, and contact.</p>
+        <div class="card-tags"><span class="tag">Agency</span><span class="tag">Creative</span><span class="tag">Case Studies</span></div>
+      </div>
+    </a>
+  </div>
+</div>
+
+<div class="cta">
+  <h2>Let's build something.</h2>
+  <p>I design and develop custom websites that look great and drive results.</p>
+  <a class="cta-btn" href="mailto:josh@example.com">Get in Touch</a>
+</div>
+
+<footer>&copy; 2026 Josh. All rights reserved.</footer>
+
+</body>
+</html>
